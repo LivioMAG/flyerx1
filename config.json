@@ -1,8 +1,10 @@
 {
   "heroImage": "hero.jpg",
+  "platformImage": "platform.jpg",
   "sourceImage": "source.jpg",
   "abstractImage": "abstract.jpg",
-  "realisticRender": "render.jpg",
-  "platformImage": "platform.jpg",
-  "onboardingImage": "onboarding.jpg"
+  "conceptRender": "concept.jpg",
+  "realisticRender": "realistic.jpg",
+  "onboardingImage": "onboarding.jpg",
+  "calendarImage": "calendar.jpg"
 }
