@@ -1,11 +1,8 @@
-// Lädt Bildkonfiguration dynamisch und initialisiert Interaktionen.
 (async function initApp() {
   const config = await loadConfig();
   applyImages(config);
   initRevealAnimations();
-  initParallax();
-  initTransformSection();
-  initCardTilt();
+  initTransformationStory();
 })();
 
 async function loadConfig() {
@@ -20,21 +17,14 @@ async function loadConfig() {
 }
 
 function applyImages(config) {
-  const nodes = document.querySelectorAll("[data-image-key]");
-
-  nodes.forEach((node) => {
-    const primary = node.dataset.imageKey;
-    const fallbackKey = node.dataset.fallbackKey;
-    const file = config[primary] || (fallbackKey ? config[fallbackKey] : null);
-
-    if (!file) return setPlaceholder(node, `${primary} fehlt`);
-
+  document.querySelectorAll("[data-image-key]").forEach((node) => {
+    const key = node.dataset.imageKey;
+    const file = config[key];
+    if (!file) return setPlaceholder(node, `${key} fehlt`);
     const img = new Image();
     img.onload = () => {
       node.style.setProperty("--image", `url('${encodeURI(file)}')`);
-      node.classList.add("has-image");
-      const fallback = node.querySelector(".image-fallback");
-      if (fallback) fallback.style.display = "none";
+      node.querySelector(".image-fallback")?.remove();
     };
     img.onerror = () => setPlaceholder(node, `${file} nicht gefunden`);
     img.src = file;
@@ -42,84 +32,109 @@ function applyImages(config) {
 }
 
 function setPlaceholder(node, text) {
-  node.style.setProperty(
-    "--image",
-    "linear-gradient(135deg, rgba(210,216,227,.65), rgba(238,241,246,.95))"
-  );
+  node.style.setProperty("--image", "linear-gradient(145deg, #1d2a45, #10182a)");
   const fallback = node.querySelector(".image-fallback");
   if (fallback) fallback.textContent = `Platzhalter · ${text}`;
 }
 
 function initRevealAnimations() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add("in-view");
-      });
-    },
-    { threshold: 0.15 }
-  );
-
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("in-view"));
+  }, { threshold: 0.15 });
   document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 }
 
-function initParallax() {
-  const parallaxNodes = document.querySelectorAll(".parallax");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion || !parallaxNodes.length) return;
+function initTransformationStory() {
+  const story = document.querySelector(".transformation-story");
+  if (!story) return;
 
-  const update = () => {
-    const viewportMid = window.innerHeight / 2;
-    parallaxNodes.forEach((node) => {
-      const speed = Number(node.dataset.parallax || 0.12);
-      const rect = node.getBoundingClientRect();
-      const delta = (rect.top + rect.height / 2 - viewportMid) * speed;
-      node.style.transform = `translate3d(0, ${-delta}px, 0)`;
-    });
+  const source = story.querySelector(".layer-source");
+  const abstract = story.querySelector(".layer-abstract");
+  const finalLayer = story.querySelector(".layer-final");
+  const title = story.querySelector(".phase-title");
+  const description = story.querySelector(".phase-description");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const phases = [
+    { title: "Vom Ausgangsbild", description: "Wir starten mit dem bestehenden Raum, Grundriss oder 2D Rendering." },
+    { title: "Zur räumlichen Idee", description: "Aus der Vorlage entsteht eine konzeptionelle Interpretation mit Stimmung, Materialität und Raumgefühl." },
+    { title: "Zur fertigen Visualisierung", description: "Innerhalb von 4 Stunden entsteht eine hochwertige Innenvisualisierung für Präsentation, Verkauf oder Entscheidungsfindung." }
+  ];
+
+  const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const mapRange = (v, inMin, inMax, outMin, outMax) => {
+    const t = clamp((v - inMin) / (inMax - inMin));
+    return lerp(outMin, outMax, t);
   };
 
-  update();
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-}
+  let raf = null;
+  let currentPhase = -1;
 
-function initTransformSection() {
-  const stage = document.querySelector("#transform-stage");
-  if (!stage) return;
-
-  const layers = [...stage.querySelectorAll(".layer")];
-  const dots = [...stage.querySelectorAll(".stage-dot")];
-  let idx = 0;
-
-  const activate = (next) => {
-    idx = next;
-    layers.forEach((layer, i) => layer.classList.toggle("active", i === idx));
-    dots.forEach((dot, i) => dot.classList.toggle("active", i === idx));
+  const updateText = (phase) => {
+    if (phase === currentPhase) return;
+    currentPhase = phase;
+    title.style.opacity = "0";
+    description.style.opacity = "0";
+    title.style.transform = "translateY(14px)";
+    description.style.transform = "translateY(14px)";
+    setTimeout(() => {
+      title.textContent = phases[phase].title;
+      description.textContent = phases[phase].description;
+      title.style.opacity = "1";
+      description.style.opacity = "1";
+      title.style.transform = "translateY(0)";
+      description.style.transform = "translateY(0)";
+    }, reduceMotion ? 0 : 180);
   };
 
-  dots.forEach((dot) => {
-    dot.addEventListener("click", () => activate(Number(dot.dataset.goto)));
-  });
+  title.style.transition = description.style.transition = "opacity .45s ease, transform .6s ease";
 
-  setInterval(() => activate((idx + 1) % layers.length), 3600);
-}
+  const render = () => {
+    raf = null;
+    const rect = story.getBoundingClientRect();
+    const maxScroll = rect.height - window.innerHeight;
+    const progress = clamp(-rect.top / maxScroll);
 
-function initCardTilt() {
-  const cards = document.querySelectorAll("[data-tilt]");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) return;
+    const abstractIn = mapRange(progress, 0.3, 0.6, 0, 1);
+    const finalIn = mapRange(progress, 0.6, 1, 0, 1);
+    const sourceOut = mapRange(progress, 0.25, 0.6, 0, 1);
 
-  cards.forEach((card) => {
-    card.addEventListener("mousemove", (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const rotateY = ((x / rect.width) - 0.5) * 8;
-      const rotateX = (0.5 - y / rect.height) * 8;
-      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-    });
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "";
-    });
-  });
+    source.style.opacity = `${lerp(1, 0.26, sourceOut)}`;
+    source.style.transform = `translate3d(0,0,0) scale(${lerp(1, 0.93, sourceOut)})`;
+    source.style.filter = `blur(${lerp(0, 1.6, sourceOut)}px) brightness(${lerp(1, 0.72, sourceOut)})`;
+
+    abstract.style.opacity = `${lerp(0, 1, abstractIn) * lerp(1, 0.35, finalIn)}`;
+    abstract.style.transform = `translate3d(0, ${lerp(80, 0, abstractIn)}px, 0) scale(${lerp(0.96, 1, abstractIn)})`;
+    abstract.style.filter = `blur(${lerp(7, 0.3, abstractIn)}px)`;
+    abstract.style.clipPath = `inset(${lerp(10, 0, abstractIn)}% round 26px)`;
+
+    finalLayer.style.opacity = `${lerp(0, 1, finalIn)}`;
+    finalLayer.style.transform = `translate3d(0, ${lerp(100, 0, finalIn)}px, 0) scale(${lerp(0.96, 1, finalIn)})`;
+    finalLayer.style.filter = `blur(${lerp(8, 0, finalIn)}px)`;
+    finalLayer.style.clipPath = `inset(${lerp(12, 0, finalIn)}% round 26px)`;
+
+    if (progress < 0.37) updateText(0);
+    else if (progress < 0.68) updateText(1);
+    else updateText(2);
+  };
+
+  const requestRender = () => {
+    if (raf) return;
+    raf = requestAnimationFrame(render);
+  };
+
+  if (reduceMotion) {
+    source.style.opacity = "0.2";
+    abstract.style.opacity = "0";
+    finalLayer.style.opacity = "1";
+    finalLayer.style.transform = "none";
+    finalLayer.style.filter = "none";
+    updateText(2);
+    return;
+  }
+
+  render();
+  window.addEventListener("scroll", requestRender, { passive: true });
+  window.addEventListener("resize", requestRender);
 }
