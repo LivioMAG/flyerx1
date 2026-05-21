@@ -3,64 +3,118 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Innenvisualisierung als animiertes A4-PDF</title>
+    <title>Interior Visualisierung als animiertes A4-Dokument</title>
     <meta
       name="description"
-      content="Ein scrollgesteuertes, animiertes A4-Dokument im Apple-inspirierten Premium-Stil für Interior Visualisierung."
+      content="Scrollgesteuerte Apple-inspirierte A4-Präsentation für Interior Visualisierung."
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="document-scroll" id="documentScroll">
       <div class="a4-stage-wrapper">
-        <section class="a4-page" id="a4Page" aria-label="Animiertes A4-Dokument">
-          <div class="ambient-light" aria-hidden="true"></div>
+        <section class="a4-page" id="a4Page" aria-label="Animierte A4-Präsentation">
+          <div class="a4-background-glow" id="a4BackgroundGlow" aria-hidden="true"></div>
 
-          <div class="image-layer-stack" aria-hidden="true">
-            <figure class="image-frame layer-hero" data-layer="hero">
-              <img data-image-key="heroImage" alt="Hero-Bild" />
-            </figure>
-            <figure class="image-frame layer-source" data-layer="source">
-              <img data-image-key="sourceImage" alt="Ausgangsbild" />
-            </figure>
-            <figure class="image-frame layer-abstract" data-layer="abstract">
-              <img data-image-key="abstractImage" alt="Abstrakte Konzeptvisualisierung" />
-            </figure>
-            <figure class="image-frame layer-render" data-layer="render">
-              <img data-image-key="realisticRender" alt="Finale Visualisierung" />
-            </figure>
-          </div>
-
-          <div class="scene-content">
-            <p class="eyebrow" id="sceneEyebrow"></p>
-            <h1 id="sceneHeadline"></h1>
-            <p class="scene-description" id="sceneDescription"></p>
-
-            <div class="micro-ui" id="sceneMicroUi" aria-hidden="true">
-              <span>Upload</span>
-              <span>Plattform</span>
-              <span>E-Mail-Login</span>
+          <article class="scene scene-service" data-scene="0">
+            <div class="scene-copy">
+              <p class="eyebrow">Interior Visualisierung</p>
+              <h1>Aus Bildern werden Räume, die überzeugen.</h1>
+              <p>
+                Wir erstellen hochwertige Innenvisualisierungen aus Ihren bestehenden Bildern,
+                Grundrissen oder 2D-Renderings — schnell, klar und präsentationsbereit.
+              </p>
             </div>
-
-            <div class="scene-list" id="sceneList" aria-hidden="true">
-              <span>Hochladen</span>
-              <span>Visualisieren</span>
-              <span>Prüfen</span>
-              <span>Erst dann bezahlen</span>
+            <div class="scene-visual visual-card">
+              <img data-config-image="heroImage" data-fallback-key="sourceImage" alt="Hero Visualisierung" />
             </div>
+          </article>
 
-            <div class="cta-row" id="sceneCtas">
-              <a href="#" class="pill-btn primary" id="ctaPrimary">Projekt starten</a>
-              <a href="#" class="pill-btn" id="ctaSecondary">Onboarding anfragen</a>
+          <article class="scene scene-platform" data-scene="1">
+            <div class="scene-copy">
+              <h2>Ihre Plattform für neue Visualisierungen.</h2>
+              <p>
+                Nach der Kontaktaufnahme erhalten Sie Zugriff auf unsere Plattform. Dort können Sie
+                Ihre Bilder hochladen und direkt angeben, welche Anpassungen oder Stilrichtungen Sie
+                wünschen.
+              </p>
             </div>
-          </div>
+            <div class="scene-visual visual-card platform-preview">
+              <img data-config-image="platformImage" alt="Plattformansicht" />
+              <div class="platform-fallback" data-fallback="platformImage" aria-hidden="true">
+                <div class="platform-row"><span>E-Mail-Login</span><span>Verifiziert</span></div>
+                <div class="upload-card">Datei-Upload · JPG / PNG / PDF</div>
+                <div class="platform-field">Gewünschte Anpassung: „Mehr Tageslicht, warme Materialien"</div>
+              </div>
+            </div>
+          </article>
 
-          <div class="workflow-pills" role="list" aria-label="Workflow">
-            <span role="listitem" class="workflow-pill" data-step="0">Upload</span>
-            <span role="listitem" class="workflow-pill" data-step="1">Konzept</span>
-            <span role="listitem" class="workflow-pill" data-step="2">Rendering</span>
-            <span role="listitem" class="workflow-pill" data-step="3">Prüfung</span>
-          </div>
+          <article class="scene scene-input" data-scene="2">
+            <div class="scene-copy">
+              <h2>Sie liefern den Ausgangspunkt.</h2>
+              <p>
+                Ob Foto, Grundriss oder 2D-Rendering: Ihr Input bildet die Basis für die
+                Visualisierung.
+              </p>
+            </div>
+            <div class="scene-visual visual-card input-card">
+              <img data-config-image="sourceImage" alt="Ausgangsbild als Input" />
+            </div>
+          </article>
+
+          <article class="scene scene-results" data-scene="3">
+            <div class="scene-copy">
+              <h2>Zwei Richtungen. Ein überzeugendes Ergebnis.</h2>
+              <p>
+                Je nach Ziel entsteht eine konzeptionelle Visualisierung für Stimmung und Raumidee
+                oder eine realistische Visualisierung für Präsentation, Verkauf und
+                Entscheidungsfindung.
+              </p>
+            </div>
+            <div class="scene-visual result-comparison">
+              <figure class="result-card concept-card visual-card">
+                <img data-config-image="conceptRender" data-fallback-key="abstractImage" alt="Konzeptionelle Visualisierung" />
+                <figcaption>Konzeptionell</figcaption>
+              </figure>
+              <figure class="result-card realistic-card visual-card">
+                <img data-config-image="realisticRender" alt="Realistische Visualisierung" />
+                <figcaption>Realistisch</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="scene scene-booking" data-scene="4">
+            <div class="scene-copy">
+              <h2>Überzeugt? Dann starten wir gemeinsam.</h2>
+              <p>
+                Vereinbaren Sie einen kurzen Termin mit uns. Wir zeigen Ihnen den Ablauf, richten den
+                Zugang ein und begleiten Sie beim ersten Projekt.
+              </p>
+              <p class="trust-line">Bezahlt wird erst, wenn das Ergebnis überzeugt.</p>
+              <div class="cta-row">
+                <a href="#" class="cta-btn cta-primary">Termin vereinbaren</a>
+                <a href="#" class="cta-btn">Erstes Projekt starten</a>
+              </div>
+            </div>
+            <div class="scene-visual visual-card booking-card">
+              <img data-config-image="onboardingImage" data-fallback-key="calendarImage" alt="Onboarding und Terminplanung" />
+              <div class="calendar-fallback" data-fallback="onboardingImage" aria-hidden="true">
+                <div class="calendar-chip">Meeting · 20 Min</div>
+                <div class="calendar-grid">
+                  <span></span><span></span><span class="active"></span>
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <nav class="scene-progress" aria-label="Ablauf-Navigation">
+            <button type="button" data-progress-target="0.1" class="is-active">Service</button>
+            <button type="button" data-progress-target="0.3">Plattform</button>
+            <button type="button" data-progress-target="0.5">Input</button>
+            <button type="button" data-progress-target="0.7">Ergebnis</button>
+            <button type="button" data-progress-target="0.9">Termin</button>
+          </nav>
         </section>
       </div>
     </main>
