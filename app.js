@@ -1,140 +1,135 @@
-(async function initApp() {
+(async function initFlyer() {
   const config = await loadConfig();
-  applyImages(config);
-  initRevealAnimations();
-  initTransformationStory();
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const layers = Array.from(document.querySelectorAll(".visual-layer"));
+  const pills = Array.from(document.querySelectorAll(".phase-pill"));
+  const placeholder = document.getElementById("visual-placeholder");
+
+  const phaseState = {
+    current: 0,
+    timer: null,
+    autoDelay: 3600,
+    pauseAfterManual: 6500
+  };
+
+  await applyImages(config, layers);
+
+  const loadedCount = layers.filter((img) => img.dataset.loaded === "true").length;
+  placeholder.textContent = loadedCount > 0
+    ? "Ausgangsbild · Konzept · Visualisierung"
+    : "Platzhalter aktiv · Bitte Bildpfade in config.json prüfen";
+
+  function setPhase(nextPhase, isManual = false) {
+    phaseState.current = nextPhase;
+
+    layers.forEach((layer, index) => {
+      layer.classList.remove("is-active", "is-adjacent");
+      if (index === nextPhase) {
+        layer.classList.add("is-active");
+      } else if (Math.abs(index - nextPhase) === 1 || Math.abs(index - nextPhase) === 2) {
+        layer.classList.add("is-adjacent");
+      }
+    });
+
+    pills.forEach((pill, index) => {
+      const active = index === nextPhase;
+      pill.setAttribute("aria-selected", String(active));
+    });
+
+    if (isManual && !reduceMotion) {
+      stopAutoCycle();
+      window.setTimeout(startAutoCycle, phaseState.pauseAfterManual);
+    }
+  }
+
+  function nextPhase() {
+    const next = (phaseState.current + 1) % layers.length;
+    setPhase(next, false);
+  }
+
+  function startAutoCycle() {
+    if (reduceMotion || phaseState.timer || layers.length < 2) return;
+    phaseState.timer = window.setInterval(nextPhase, phaseState.autoDelay);
+  }
+
+  function stopAutoCycle() {
+    if (!phaseState.timer) return;
+    window.clearInterval(phaseState.timer);
+    phaseState.timer = null;
+  }
+
+  pills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const target = Number(pill.dataset.phase);
+      if (!Number.isInteger(target)) return;
+      setPhase(target, true);
+    });
+  });
+
+  setPhase(0, false);
+  startAutoCycle();
 })();
 
 async function loadConfig() {
   try {
-    const res = await fetch("./config.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("config.json konnte nicht geladen werden.");
-    return await res.json();
-  } catch (err) {
-    console.warn("Fehler beim Laden der Konfiguration:", err);
+    const response = await fetch("./config.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.warn("config.json konnte nicht geladen werden:", error);
     return {};
   }
 }
 
-function applyImages(config) {
-  document.querySelectorAll("[data-image-key]").forEach((node) => {
-    const key = node.dataset.imageKey;
-    const file = config[key];
-    if (!file) return setPlaceholder(node, `${key} fehlt`);
-    const img = new Image();
-    img.onload = () => {
-      node.style.setProperty("--image", `url('${encodeURI(file)}')`);
-      node.querySelector(".image-fallback")?.remove();
-    };
-    img.onerror = () => setPlaceholder(node, `${file} nicht gefunden`);
-    img.src = file;
+async function applyImages(config, layers) {
+  const keys = ["sourceImage", "abstractImage", "realisticRender"];
+
+  await Promise.all(
+    layers.map(async (layer, index) => {
+      const key = keys[index];
+      const src = config[key];
+
+      if (!src) {
+        setFallbackImage(layer, `Fehlender Eintrag: ${key}`);
+        return;
+      }
+
+      try {
+        await preloadImage(src);
+        layer.src = src;
+        layer.dataset.loaded = "true";
+      } catch {
+        setFallbackImage(layer, `Datei nicht gefunden: ${src}`);
+      }
+    })
+  );
+}
+
+function preloadImage(src) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = resolve;
+    image.onerror = reject;
+    image.src = src;
   });
 }
 
-function setPlaceholder(node, text) {
-  node.style.setProperty("--image", "linear-gradient(145deg, #1d2a45, #10182a)");
-  const fallback = node.querySelector(".image-fallback");
-  if (fallback) fallback.textContent = `Platzhalter · ${text}`;
-}
+function setFallbackImage(layer, message) {
+  const fallbackSVG = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'>
+      <defs>
+        <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+          <stop offset='0%' stop-color='#22314f'/>
+          <stop offset='100%' stop-color='#0f192b'/>
+        </linearGradient>
+      </defs>
+      <rect width='1280' height='720' fill='url(#g)'/>
+      <text x='50%' y='48%' text-anchor='middle' fill='#d6e2ff' font-size='40' font-family='Inter, Arial'>Bildplatzhalter</text>
+      <text x='50%' y='56%' text-anchor='middle' fill='#a8b7d6' font-size='25' font-family='Inter, Arial'>${message}</text>
+    </svg>
+  `)}`;
 
-function initRevealAnimations() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("in-view"));
-  }, { threshold: 0.15 });
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-}
-
-function initTransformationStory() {
-  const story = document.querySelector(".transformation-story");
-  if (!story) return;
-
-  const source = story.querySelector(".layer-source");
-  const abstract = story.querySelector(".layer-abstract");
-  const finalLayer = story.querySelector(".layer-final");
-  const title = story.querySelector(".phase-title");
-  const description = story.querySelector(".phase-description");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const phases = [
-    { title: "Vom Ausgangsbild", description: "Wir starten mit dem bestehenden Raum, Grundriss oder 2D Rendering." },
-    { title: "Zur räumlichen Idee", description: "Aus der Vorlage entsteht eine konzeptionelle Interpretation mit Stimmung, Materialität und Raumgefühl." },
-    { title: "Zur fertigen Visualisierung", description: "Innerhalb von 4 Stunden entsteht eine hochwertige Innenvisualisierung für Präsentation, Verkauf oder Entscheidungsfindung." }
-  ];
-
-  const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
-  const lerp = (a, b, t) => a + (b - a) * t;
-  const mapRange = (v, inMin, inMax, outMin, outMax) => {
-    const t = clamp((v - inMin) / (inMax - inMin));
-    return lerp(outMin, outMax, t);
-  };
-
-  let raf = null;
-  let currentPhase = -1;
-
-  const updateText = (phase) => {
-    if (phase === currentPhase) return;
-    currentPhase = phase;
-    title.style.opacity = "0";
-    description.style.opacity = "0";
-    title.style.transform = "translateY(14px)";
-    description.style.transform = "translateY(14px)";
-    setTimeout(() => {
-      title.textContent = phases[phase].title;
-      description.textContent = phases[phase].description;
-      title.style.opacity = "1";
-      description.style.opacity = "1";
-      title.style.transform = "translateY(0)";
-      description.style.transform = "translateY(0)";
-    }, reduceMotion ? 0 : 180);
-  };
-
-  title.style.transition = description.style.transition = "opacity .45s ease, transform .6s ease";
-
-  const render = () => {
-    raf = null;
-    const rect = story.getBoundingClientRect();
-    const maxScroll = rect.height - window.innerHeight;
-    const progress = clamp(-rect.top / maxScroll);
-
-    const abstractIn = mapRange(progress, 0.3, 0.6, 0, 1);
-    const finalIn = mapRange(progress, 0.6, 1, 0, 1);
-    const sourceOut = mapRange(progress, 0.25, 0.6, 0, 1);
-
-    source.style.opacity = `${lerp(1, 0.26, sourceOut)}`;
-    source.style.transform = `translate3d(0,0,0) scale(${lerp(1, 0.93, sourceOut)})`;
-    source.style.filter = `blur(${lerp(0, 1.6, sourceOut)}px) brightness(${lerp(1, 0.72, sourceOut)})`;
-
-    abstract.style.opacity = `${lerp(0, 1, abstractIn) * lerp(1, 0.35, finalIn)}`;
-    abstract.style.transform = `translate3d(0, ${lerp(80, 0, abstractIn)}px, 0) scale(${lerp(0.96, 1, abstractIn)})`;
-    abstract.style.filter = `blur(${lerp(7, 0.3, abstractIn)}px)`;
-    abstract.style.clipPath = `inset(${lerp(10, 0, abstractIn)}% round 26px)`;
-
-    finalLayer.style.opacity = `${lerp(0, 1, finalIn)}`;
-    finalLayer.style.transform = `translate3d(0, ${lerp(100, 0, finalIn)}px, 0) scale(${lerp(0.96, 1, finalIn)})`;
-    finalLayer.style.filter = `blur(${lerp(8, 0, finalIn)}px)`;
-    finalLayer.style.clipPath = `inset(${lerp(12, 0, finalIn)}% round 26px)`;
-
-    if (progress < 0.37) updateText(0);
-    else if (progress < 0.68) updateText(1);
-    else updateText(2);
-  };
-
-  const requestRender = () => {
-    if (raf) return;
-    raf = requestAnimationFrame(render);
-  };
-
-  if (reduceMotion) {
-    source.style.opacity = "0.2";
-    abstract.style.opacity = "0";
-    finalLayer.style.opacity = "1";
-    finalLayer.style.transform = "none";
-    finalLayer.style.filter = "none";
-    updateText(2);
-    return;
-  }
-
-  render();
-  window.addEventListener("scroll", requestRender, { passive: true });
-  window.addEventListener("resize", requestRender);
+  layer.src = fallbackSVG;
+  layer.dataset.loaded = "false";
 }

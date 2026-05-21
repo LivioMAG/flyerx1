@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interior Rendering Premium | Visualisierung in 4 Stunden</title>
+    <title>Innenvisualisierung in 4 Stunden | Bewegter Premium-Flyer</title>
     <meta
       name="description"
-      content="Premium-Innenraumvisualisierung in nur 4 Stunden: Bilder hochladen, Stil wählen, Ergebnis erhalten – zahlen erst bei Zufriedenheit."
+      content="Laden Sie Ihr Ausgangsbild hoch und erhalten Sie in 4 Stunden eine hochwertige Innenvisualisierung – bezahlt wird erst, wenn das Ergebnis überzeugt."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,82 +14,62 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8QbQxQ7hGQfZ6+f2z8Qm+0A5m5B2Q=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="noise-overlay" aria-hidden="true"></div>
+    <main class="flyer-page">
+      <section class="flyer-hero" aria-label="Digitaler Flyer Innenvisualisierung">
+        <div class="flyer-copy">
+          <small class="eyebrow">Interior Visualisierung</small>
+          <h1>Innenräume sichtbar machen. In 4 Stunden.</h1>
+          <p class="subheadline">
+            Laden Sie Ihr Ausgangsbild hoch. Wir erstellen eine hochwertige
+            Innenvisualisierung — bezahlt wird erst, wenn das Ergebnis überzeugt.
+          </p>
 
-    <header class="hero section" id="top">
-      <nav class="nav container">
-        <a href="#top" class="brand">INFRAME</a>
-        <div class="nav-actions">
-          <a href="#prozess" class="link-soft">Ablauf</a>
-          <a href="#start" class="btn btn-primary">Projekt starten</a>
-        </div>
-      </nav>
-
-      <div class="hero-content container reveal">
-        <p class="eyebrow">Premium Interior Rendering · Ergebnis in 4 Stunden</p>
-        <h1>Innenräume visualisieren. Schneller. Schöner. Wirkungsvoller.</h1>
-        <p class="hero-sub">
-          Kunden laden ihre Bilder über unsere Plattform hoch und erhalten innerhalb von
-          4 Stunden professionelle Innenvisualisierungen – präzise, hochwertig und auf
-          Präsentationsniveau.
-        </p>
-        <div class="hero-cta">
-          <a href="#start" class="btn btn-primary">Projekt starten</a>
-          <a href="#prozess" class="btn btn-ghost">Ablauf ansehen</a>
-        </div>
-      </div>
-
-      <div class="hero-media container reveal">
-        <div class="image-shell parallax" data-parallax="0.16" data-image-key="heroImage">
-          <div class="image-fallback">Hero Image</div>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <section class="section transformation-story" id="transformation-story">
-        <div class="transformation-sticky container">
-          <div class="transformation-copy" aria-live="polite">
-            <p class="eyebrow">Transformation</p>
-            <p class="phase-kicker">Scroll Experience</p>
-            <h2 class="phase-title">Vom Ausgangsbild</h2>
-            <p class="phase-description">Wir starten mit dem bestehenden Raum, Grundriss oder 2D Rendering.</p>
+          <div class="promise-badge" role="note" aria-label="Qualitätsversprechen">
+            <strong>Zahlen Sie erst, wenn Sie überzeugt sind.</strong>
+            <span>Wir liefern zuerst das Ergebnis. Sie entscheiden danach.</span>
           </div>
 
-          <div class="transformation-visual" aria-label="Scrollgesteuerte Bild-Transformation">
-            <figure class="visual-layer layer-source" data-image-key="sourceImage">
-              <div class="image-fallback">Ursprungsbild</div>
-            </figure>
-            <figure class="visual-layer layer-abstract" data-image-key="abstractImage">
-              <div class="image-fallback">Abstrakte Visualisierung</div>
-            </figure>
-            <figure class="visual-layer layer-final" data-image-key="realisticRender">
-              <div class="image-fallback">Finale Visualisierung</div>
-            </figure>
+          <div class="cta-row">
+            <a href="#" class="btn btn-primary">Projekt starten</a>
+            <a href="#" class="btn btn-secondary">Onboarding anfragen</a>
+          </div>
+          <p class="cta-note">Persönliches Onboarding beim ersten Einsatz inklusive.</p>
+        </div>
+
+        <div class="flyer-visual">
+          <div class="visual-stage" aria-live="polite" aria-label="Bildtransformation">
+            <img class="visual-layer" data-image-key="sourceImage" alt="Ausgangsbild" />
+            <img class="visual-layer" data-image-key="abstractImage" alt="Konzeptvisualisierung" />
+            <img class="visual-layer" data-image-key="realisticRender" alt="Finale Innenvisualisierung" />
+            <div class="visual-placeholder" id="visual-placeholder">Bilder werden geladen …</div>
+          </div>
+
+          <div class="phase-controls" role="tablist" aria-label="Bildphasen">
+            <button type="button" class="phase-pill" data-phase="0" role="tab" aria-selected="true">Ausgangsbild</button>
+            <button type="button" class="phase-pill" data-phase="1" role="tab" aria-selected="false">Konzept</button>
+            <button type="button" class="phase-pill" data-phase="2" role="tab" aria-selected="false">Visualisierung</button>
           </div>
         </div>
-      </section>
 
-      <section class="section container reveal" id="service">
-        <div class="section-head">
-          <p class="eyebrow">Produkt</p>
-          <h2>Eine Plattform, ein klarer Prozess, ein Premium-Ergebnis.</h2>
-        </div>
-        <div class="service-grid">
-          <article class="glass-card"><i class="fa-solid fa-cloud-arrow-up"></i><h3>Upload über Plattform</h3><p>Kund:innen registrieren sich mit E-Mail-Adresse, laden ihr Ausgangsbild hoch und starten den Auftrag in weniger als einer Minute.</p></article>
-          <article class="glass-card"><i class="fa-solid fa-wand-magic-sparkles"></i><h3>Visualisierung in 4 Stunden</h3><p>Nach dem Upload erstellen wir die gewünschte Innenvisualisierung und liefern das Ergebnis innerhalb von 4 Stunden.</p></article>
-          <article class="glass-card"><i class="fa-solid fa-user-check"></i><h3>Onboarding & Self-Service</h3><p>Beim ersten Einsatz begleiten wir Sie persönlich. Danach nutzen Sie die Plattform jederzeit selbstständig für neue Projekte.</p></article>
-          <article class="glass-card"><i class="fa-solid fa-shield-heart"></i><h3>Starkes Qualitätsversprechen</h3><p>Sie zahlen erst, wenn das Ergebnis überzeugt. Wenn Sie nicht zufrieden sind, fallen keine Kosten an.</p></article>
+        <div class="flyer-steps" aria-label="Ablauf in drei Schritten">
+          <article class="step-card">
+            <span>1</span>
+            <h2>Hochladen</h2>
+            <p>Bild über die Plattform hochladen.</p>
+          </article>
+          <article class="step-card">
+            <span>2</span>
+            <h2>Visualisieren</h2>
+            <p>Konzept oder realistische Visualisierung erstellen lassen.</p>
+          </article>
+          <article class="step-card">
+            <span>3</span>
+            <h2>Überzeugen</h2>
+            <p>Ergebnis prüfen — bezahlen erst bei Zufriedenheit.</p>
+          </article>
         </div>
       </section>
     </main>
