@@ -1,77 +1,68 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-CH">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Innenvisualisierung in 4 Stunden | Bewegter Premium-Flyer</title>
+    <title>Innenvisualisierung als animiertes A4-PDF</title>
     <meta
       name="description"
-      content="Laden Sie Ihr Ausgangsbild hoch und erhalten Sie in 4 Stunden eine hochwertige Innenvisualisierung – bezahlt wird erst, wenn das Ergebnis überzeugt."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
+      content="Ein scrollgesteuertes, animiertes A4-Dokument im Apple-inspirierten Premium-Stil für Interior Visualisierung."
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="flyer-page">
-      <section class="flyer-hero" aria-label="Digitaler Flyer Innenvisualisierung">
-        <div class="flyer-copy">
-          <small class="eyebrow">Interior Visualisierung</small>
-          <h1>Innenräume sichtbar machen. In 4 Stunden.</h1>
-          <p class="subheadline">
-            Laden Sie Ihr Ausgangsbild hoch. Wir erstellen eine hochwertige
-            Innenvisualisierung — bezahlt wird erst, wenn das Ergebnis überzeugt.
-          </p>
+    <main class="document-scroll" id="documentScroll">
+      <div class="a4-stage-wrapper">
+        <section class="a4-page" id="a4Page" aria-label="Animiertes A4-Dokument">
+          <div class="ambient-light" aria-hidden="true"></div>
 
-          <div class="promise-badge" role="note" aria-label="Qualitätsversprechen">
-            <strong>Zahlen Sie erst, wenn Sie überzeugt sind.</strong>
-            <span>Wir liefern zuerst das Ergebnis. Sie entscheiden danach.</span>
+          <div class="image-layer-stack" aria-hidden="true">
+            <figure class="image-frame layer-hero" data-layer="hero">
+              <img data-image-key="heroImage" alt="Hero-Bild" />
+            </figure>
+            <figure class="image-frame layer-source" data-layer="source">
+              <img data-image-key="sourceImage" alt="Ausgangsbild" />
+            </figure>
+            <figure class="image-frame layer-abstract" data-layer="abstract">
+              <img data-image-key="abstractImage" alt="Abstrakte Konzeptvisualisierung" />
+            </figure>
+            <figure class="image-frame layer-render" data-layer="render">
+              <img data-image-key="realisticRender" alt="Finale Visualisierung" />
+            </figure>
           </div>
 
-          <div class="cta-row">
-            <a href="#" class="btn btn-primary">Projekt starten</a>
-            <a href="#" class="btn btn-secondary">Onboarding anfragen</a>
-          </div>
-          <p class="cta-note">Persönliches Onboarding beim ersten Einsatz inklusive.</p>
-        </div>
+          <div class="scene-content">
+            <p class="eyebrow" id="sceneEyebrow"></p>
+            <h1 id="sceneHeadline"></h1>
+            <p class="scene-description" id="sceneDescription"></p>
 
-        <div class="flyer-visual">
-          <div class="visual-stage" aria-live="polite" aria-label="Bildtransformation">
-            <img class="visual-layer" data-image-key="sourceImage" alt="Ausgangsbild" />
-            <img class="visual-layer" data-image-key="abstractImage" alt="Konzeptvisualisierung" />
-            <img class="visual-layer" data-image-key="realisticRender" alt="Finale Innenvisualisierung" />
-            <div class="visual-placeholder" id="visual-placeholder">Bilder werden geladen …</div>
+            <div class="micro-ui" id="sceneMicroUi" aria-hidden="true">
+              <span>Upload</span>
+              <span>Plattform</span>
+              <span>E-Mail-Login</span>
+            </div>
+
+            <div class="scene-list" id="sceneList" aria-hidden="true">
+              <span>Hochladen</span>
+              <span>Visualisieren</span>
+              <span>Prüfen</span>
+              <span>Erst dann bezahlen</span>
+            </div>
+
+            <div class="cta-row" id="sceneCtas">
+              <a href="#" class="pill-btn primary" id="ctaPrimary">Projekt starten</a>
+              <a href="#" class="pill-btn" id="ctaSecondary">Onboarding anfragen</a>
+            </div>
           </div>
 
-          <div class="phase-controls" role="tablist" aria-label="Bildphasen">
-            <button type="button" class="phase-pill" data-phase="0" role="tab" aria-selected="true">Ausgangsbild</button>
-            <button type="button" class="phase-pill" data-phase="1" role="tab" aria-selected="false">Konzept</button>
-            <button type="button" class="phase-pill" data-phase="2" role="tab" aria-selected="false">Visualisierung</button>
+          <div class="workflow-pills" role="list" aria-label="Workflow">
+            <span role="listitem" class="workflow-pill" data-step="0">Upload</span>
+            <span role="listitem" class="workflow-pill" data-step="1">Konzept</span>
+            <span role="listitem" class="workflow-pill" data-step="2">Rendering</span>
+            <span role="listitem" class="workflow-pill" data-step="3">Prüfung</span>
           </div>
-        </div>
-
-        <div class="flyer-steps" aria-label="Ablauf in drei Schritten">
-          <article class="step-card">
-            <span>1</span>
-            <h2>Hochladen</h2>
-            <p>Bild über die Plattform hochladen.</p>
-          </article>
-          <article class="step-card">
-            <span>2</span>
-            <h2>Visualisieren</h2>
-            <p>Konzept oder realistische Visualisierung erstellen lassen.</p>
-          </article>
-          <article class="step-card">
-            <span>3</span>
-            <h2>Überzeugen</h2>
-            <p>Ergebnis prüfen — bezahlen erst bei Zufriedenheit.</p>
-          </article>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
 
     <script src="app.js" defer></script>

@@ -1,9 +1,8 @@
 {
   "heroImage": "hero.jpg",
-  "sourceImage": "ursprungsbild.jpg",
-  "abstractImage": "abstrakte-zeichnung.jpg",
-  "conceptRender": "konzeptionelle-visualisierung.jpg",
-  "realisticRender": "realistische-visualisierung.jpg",
-  "platformImage": "plattform.jpg",
+  "sourceImage": "source.jpg",
+  "abstractImage": "abstract.jpg",
+  "realisticRender": "render.jpg",
+  "platformImage": "platform.jpg",
   "onboardingImage": "onboarding.jpg"
 }
