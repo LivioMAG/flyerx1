@@ -45,5 +45,8 @@
   "formEmailShort": "E-Mail",
   "formServiceShort": "Interesse / Dienstleistung",
   "formMessageShort": "Nachricht (optional)",
-  "formError": "Bitte Name, gültige E-Mail und Dienstleistung ausfüllen."
+  "formError": "Bitte Name, gültige E-Mail, Dienstleistung und Projektbeschreibung ausfüllen.",
+  "formUploadShort": "Dateiupload (optional)",
+  "formUploadHint": "Keine Datei ausgewählt.",
+  "formProjectDescription": "Projektbeschreibung*"
 }
