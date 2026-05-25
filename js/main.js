@@ -21,6 +21,7 @@ const serviceIcons = {
 const slidesData = [
   {
     type: 'overview',
+    title: 'Mehr Wirkung',
     claim: 'Hochwertige Immobilienvisualisierungen für Architektur, Vermarktung und Verkauf.',
     promises: [
       'Alle Visualisierungen, die Sie bis 15:00 Uhr anfragen, erhalten Sie am nächsten Arbeitstag um 7:00 Uhr.',
@@ -69,7 +70,13 @@ function renderSlides(assets, texts) {
   const viewport = document.getElementById('slideViewport');
   viewport.innerHTML = slidesData.map((slide, index) => {
     if (slide.type === 'overview') {
-      return `<article class="slide slide-overview ${index === 0 ? 'is-active' : ''}" data-index="${index}"><img class="bg" src="${assets[slide.bg]}" alt="Visual Estate Übersicht" /><div class="overlay"></div><div class="overview-content"><div class="overview-intro"><p class="overview-claim reveal-item reveal-claim">${slide.claim}</p><div class="promise-list" role="list">${slide.promises.map((promise, promiseIndex) => `<p class="service-promise reveal-item reveal-promise" role="listitem" style="--reveal-order:${promiseIndex};"><span class="promise-dot" aria-hidden="true"></span>${promise}</p>`).join('')}</div></div><div class="overview-list" role="list">${slide.services.map((item, serviceIndex) => `<button class="service-item reveal-item reveal-service" data-target="${serviceRouteMap[item.name]}" role="listitem" style="--service-order:${serviceIndex};"><span class="service-item-icon">${serviceIcons[item.name] || ''}</span><span class="service-item-copy"><span class="service-item-title">${item.name}</span><span class="service-item-meta">${item.category}</span></span><strong>${item.price}</strong></button>`).join('')}</div></div></article>`;
+      const processSteps = [
+        { title: 'Visual Estate anfragen', text: 'Sie senden uns Ihre Anfrage über das Kontaktformular.' },
+        { title: 'Kurzes Erstgespräch', text: 'In einem kurzen Meeting erklären wir Ihnen den Ablauf und welche Unterlagen wir benötigen.' },
+        { title: 'Bilder einreichen', text: 'Danach reichen Sie Bilder und Unterlagen per E-Mail oder über unsere Plattform ein.' },
+        { title: 'Visualisierungen erhalten', text: 'Sie erhalten die fertigen Bilder spätestens am Folgetag um 7:00 Uhr.' }
+      ];
+      return `<article class="slide slide-overview ${index === 0 ? 'is-active' : ''}" data-index="${index}"><img class="bg" src="${assets[slide.bg]}" alt="Visual Estate Übersicht" /><div class="overlay"></div><div class="overview-content"><div class="overview-intro"><h1 class="overview-title reveal-item reveal-title">${slide.title}</h1><p class="overview-claim reveal-item reveal-claim">${slide.claim}</p><div class="promise-list" role="list">${slide.promises.map((promise, promiseIndex) => `<p class="service-promise reveal-item reveal-promise" role="listitem" style="--reveal-order:${promiseIndex};"><span class="promise-dot" aria-hidden="true"></span>${promise}</p>`).join('')}</div></div><div class="overview-panel reveal-item reveal-panel"><div class="overview-toggle" role="tablist" aria-label="Visual-Estate Bereich wechseln"><button class="overview-toggle-btn is-active" role="tab" type="button" data-view="process" aria-selected="true">Wie es funktioniert</button><button class="overview-toggle-btn" role="tab" type="button" data-view="pricing" aria-selected="false">Preisliste anzeigen</button></div><div class="overview-view"><div class="overview-flow is-active" data-view="process" role="list">${processSteps.map((step, stepIndex) => `<article class="flow-step reveal-item reveal-step" role="listitem" style="--step-order:${stepIndex};"><span class="flow-index" aria-hidden="true">${stepIndex + 1}</span><div><h3>${step.title}</h3><p>${step.text}</p></div></article>`).join('')}</div><div class="overview-list" data-view="pricing" role="list">${slide.services.map((item, serviceIndex) => `<button class="service-item reveal-item reveal-service" data-target="${serviceRouteMap[item.name]}" role="listitem" style="--service-order:${serviceIndex};"><span class="service-item-icon">${serviceIcons[item.name] || ''}</span><span class="service-item-copy"><span class="service-item-title">${item.name}</span><span class="service-item-meta">${item.category}</span></span><strong>${item.price}</strong></button>`).join('')}</div></div></div></div></article>`;
     }
     if (slide.type === 'contact') {
       return `<article class="slide slide-contact" data-index="${index}"><img class="bg" src="${assets[slide.bg]}" alt="${slide.title}" /><div class="overlay"></div><section class="contact-content"><h1 class="service-title">${slide.title}</h1><p class="service-subtext">${slide.text}</p><form id="inquiryForm" class="inquiry-form" novalidate><label><span>${texts.formNameShort || 'Name oder Vorname'}</span><input name="name" type="text" autocomplete="name" required /></label><label><span>${texts.formEmailShort || 'E-Mail'}</span><input name="email" type="email" autocomplete="email" required /></label><label><span>${texts.formServiceShort || 'Interesse / Dienstleistung'}</span><select name="service" required><option value="">Bitte auswählen</option>${serviceOptions.map((option) => `<option value="${option}">${option}</option>`).join('')}</select></label><label><span>${texts.formMessageShort || 'Nachricht (optional)'}</span><textarea name="message" rows="3"></textarea></label><button type="submit">${texts.formSubmit || 'Anfrage senden'}</button><p class="form-feedback" id="formFeedback" role="status" aria-live="polite"></p></form></section></article>`;
@@ -77,6 +84,25 @@ function renderSlides(assets, texts) {
     return `<article class="slide" data-index="${index}"><img class="bg" src="${assets[slide.bg]}" alt="${slide.title}" /><div class="overlay"></div><div class="service-copy"><h1 class="service-title">${slide.title}</h1><p class="service-subtext">${slide.text}</p></div><figure class="input-wrap"><img src="${assets[slide.input]}" alt="${slide.inputLabel}" /><span>${slide.inputLabel}</span></figure></article>`;
   }).join('');
   viewport.querySelectorAll('.service-item').forEach((item) => item.addEventListener('click', () => goTo(Number(item.dataset.target))));
+  bindOverviewToggle(viewport);
+}
+
+function bindOverviewToggle(viewport) {
+  const overviewSlide = viewport.querySelector('.slide-overview');
+  if (!overviewSlide) return;
+  const buttons = [...overviewSlide.querySelectorAll('.overview-toggle-btn')];
+  const views = [...overviewSlide.querySelectorAll('.overview-view > [data-view]')];
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const nextView = button.dataset.view;
+      buttons.forEach((btn) => {
+        const isActive = btn === button;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-selected', String(isActive));
+      });
+      views.forEach((view) => view.classList.toggle('is-active', view.dataset.view === nextView));
+    });
+  });
 }
 
 function bindInquiryForm(texts) { const form = document.getElementById('inquiryForm'); const feedback = document.getElementById('formFeedback'); if (!form || !feedback) return; form.addEventListener('submit', (event) => { event.preventDefault(); const name = form.elements.name.value.trim(); const email = form.elements.email.value.trim(); const service = form.elements.service.value.trim(); const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); if (!name || !validEmail || !service) { feedback.textContent = texts.formError || 'Bitte Name, gültige E-Mail und Dienstleistung ausfüllen.'; feedback.classList.remove('is-success'); return; } feedback.textContent = texts.contactSuccess || 'Danke, wir melden uns zeitnah mit den nächsten Schritten.'; feedback.classList.add('is-success'); form.reset(); }); }
