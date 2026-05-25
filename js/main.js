@@ -44,7 +44,7 @@ const threshold = 120;
 async function init() {
   const [texts, assets] = await Promise.all([fetch('text.json').then((r) => r.json()), fetch('assets.json').then((r) => r.json())]);
   document.querySelectorAll('[data-text]').forEach((e) => { const k = e.dataset.text; if (texts[k]) e.textContent = texts[k]; });
-  renderNav(); renderSlides(assets, texts); updateCounter(); updateActiveNav(); bindInteractions(); bindInquiryForm(texts);
+  renderNav(); renderSlides(assets, texts); updateCounter(); updateActiveNav(); bindInteractions(); bindMobileMenu(); bindInquiryForm(texts);
 }
 
 function renderNav() { const nav = document.getElementById('topNav'); nav.innerHTML = navItems.map((item) => `<button class="nav-btn" data-index="${item.index}">${item.label}</button>`).join(''); nav.querySelectorAll('.nav-btn').forEach((b) => b.addEventListener('click', () => goTo(Number(b.dataset.index)))); }
@@ -93,4 +93,30 @@ function onKeyDown(event) { if (event.key === 'Escape') { closeAllPanels(); retu
 function goTo(index) { if (index < 0 || index >= slidesData.length || index === activeIndex) return; closeAllPanels(); const slides = [...document.querySelectorAll('.slide')]; isTransitioning = true; slides[activeIndex].classList.remove('is-active'); slides[index].classList.add('is-active'); activeIndex = index; updateCounter(); updateActiveNav(); setTimeout(() => { isTransitioning = false; }, 900); }
 function updateActiveNav() { const nav = document.querySelectorAll('.nav-btn'); let groupIndex = 0; if (activeIndex === 8) groupIndex = 4; else if (activeIndex >= 5 && activeIndex <= 7) groupIndex = 3; else if (activeIndex >= 2 && activeIndex <= 4) groupIndex = 2; else if (activeIndex === 1) groupIndex = 1; nav.forEach((btn, idx) => btn.classList.toggle('is-active', idx === groupIndex)); }
 function updateCounter() { const current = String(activeIndex + 1).padStart(2, '0'); const total = String(slidesData.length).padStart(2, '0'); document.getElementById('slideCounter').textContent = `${current} / ${total}`; }
+
+function bindMobileMenu() {
+  const appBar = document.querySelector('.app-bar');
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('topNav');
+  if (!appBar || !toggle || !nav) return;
+
+  const closeMenu = () => {
+    appBar.classList.remove('is-menu-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle.addEventListener('click', () => {
+    const isOpen = appBar.classList.toggle('is-menu-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  nav.addEventListener('click', (event) => {
+    if (event.target.closest('.nav-btn') && window.matchMedia('(max-width: 980px)').matches) closeMenu();
+  });
+
+  window.addEventListener('resize', () => {
+    if (!window.matchMedia('(max-width: 980px)').matches) closeMenu();
+  });
+}
+
 init();

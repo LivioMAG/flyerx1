@@ -49,5 +49,6 @@
   "formUploadShort": "Dateiupload (optional)",
   "formUploadHint": "Keine Datei ausgewählt.",
   "formProjectDescription": "Kurzbeschreibung Ihres Anliegens*",
-  "formContactOnly": "Hinweis: Über diese Webseite können keine Bilder eingereicht werden. Das Formular dient nur dem Erstkontakt."
+  "formContactOnly": "Hinweis: Über diese Webseite können keine Bilder eingereicht werden. Das Formular dient nur dem Erstkontakt.",
+  "menuToggleLabel": "Navigation öffnen oder schließen"
 }
