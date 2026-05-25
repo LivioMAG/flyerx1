@@ -1,44 +1,99 @@
-const serviceData = [
-  { id:'exterior', title:'Außenvisualisierung', text:'Realistische Renderings für Architektur, Vermarktung und Projektpräsentation. Wir erstellen hochwertige Außenvisualisierungen von Gebäuden, Objekten und Immobilienprojekten – ideal für Exposés, Websites, Präsentationen und Verkaufsunterlagen.', source:'Plan, Skizze, 3D-Modell oder Referenz', result:'realistisches Außenrendering', time:'ab 4 Stunden / nächster Arbeitstag 7 Uhr', price:'ab CHF XXX', cta:'Außenvisualisierung anfragen', img:'serviceExteriorResult', category:'exterior', align:'bottom-left' },
-  { id:'interior-1', title:'Aus 2D-Plan wird ein realistischer Raum', text:'Aus Grundrissen und 2D-Plänen erstellen wir realistische Innenräume mit Einrichtung, Licht, Materialien und Atmosphäre.', source:'2D-Grundriss', result:'realistisches Innenraumbild', time:'ab 4 Stunden', price:'ab CHF XXX', cta:'Plan visualisieren lassen', img:'serviceInteriorPlanResult', category:'interior', align:'middle-left' },
-  { id:'interior-2', title:'3D-Rendering realistisch veredeln', text:'Wir machen aus bestehenden 3D-Renderings oder Modellen hochwertige, fotorealistische Bilder für Präsentation und Vermarktung.', source:'3D-Modell oder einfaches Rendering', result:'fotorealistisches Bild', time:'nächster Arbeitstag 7 Uhr', price:'ab CHF XXX', cta:'Rendering optimieren lassen', img:'serviceInteriorRenderResult', category:'interior', align:'bottom-right' },
-  { id:'interior-3', title:'Vom Rohbau zum fertigen Innenraum', text:'Wir zeigen, wie ein unfertiger Raum später aussehen könnte – mit Boden, Wänden, Licht, Möbeln und passender Atmosphäre.', source:'Rohbau oder Baustellenfoto', result:'fertige Innenvisualisierung', time:'ab 4 Stunden', price:'ab CHF XXX', cta:'Rohbau visualisieren lassen', img:'serviceRawResult', category:'interior', align:'middle-right' },
-  { id:'staging-1', title:'Virtual Staging', text:'Wir möblieren leere Räume digital und machen sie wohnlich, hochwertig und verkaufsstark.', source:'leerer Raum', result:'möblierter Raum', time:'ab 4 Stunden', price:'ab CHF XXX', cta:'Raum möblieren lassen', img:'serviceStagingResult', category:'staging', align:'bottom-left' },
-  { id:'staging-2', title:'Möbel entfernen', text:'Wir entfernen bestehende Möbel, persönliche Gegenstände oder störende Elemente digital und schaffen einen neutralen, sauberen Raum.', source:'möblierter oder überfüllter Raum', result:'leerer, neutraler Raum', time:'ab 4 Stunden', price:'ab CHF XXX', cta:'Möbel entfernen lassen', img:'serviceRemoveResult', category:'staging', align:'middle-left' },
-  { id:'staging-3', title:'Virtuelle Renovation', text:'Wir visualisieren Renovationsideen digital – zum Beispiel neue Dusche, andere Fliesen, neue Böden, Wandfarben oder moderne Materialien.', source:'alter oder renovierungsbedürftiger Raum', result:'renovierter Raum', time:'ab 4 Stunden', price:'ab CHF XXX', cta:'Renovation visualisieren lassen', img:'serviceRenovationResult', category:'staging', align:'bottom-right' }
+const slidesData = [
+  { title: 'Außenvisualisierung', text: 'Realistische Außenrenderings für Architektur, Vermarktung und Projektpräsentation.', bg: 'serviceExteriorResult', input: 'serviceExteriorSource', inputLabel: 'Kundenmaterial' },
+  { title: '2D-Plan zu Raum', text: 'Aus Grundrissen entstehen realistische Innenräume mit Licht, Materialien und Atmosphäre.', bg: 'serviceInteriorPlanResult', input: 'serviceInteriorPlanSource', inputLabel: 'Input' },
+  { title: 'Rendering veredeln', text: 'Bestehende 3D-Renderings werden zu fotorealistischen Bildern für Präsentation und Vermarktung.', bg: 'serviceInteriorRenderResult', input: 'serviceInteriorRenderSource', inputLabel: 'Input' },
+  { title: 'Rohbau zu Innenraum', text: 'Unfertige Räume werden sichtbar – mit Böden, Wänden, Möbeln, Licht und Atmosphäre.', bg: 'serviceRawResult', input: 'serviceRawSource', inputLabel: 'Kundenmaterial' },
+  { title: 'Virtual Staging', text: 'Leere Räume werden digital möbliert und verkaufsstark inszeniert.', bg: 'serviceStagingResult', input: 'serviceStagingSource', inputLabel: 'Input' },
+  { title: 'Möbel entfernen', text: 'Überladene Räume werden neutralisiert und als klare, leere Flächen dargestellt.', bg: 'serviceRemoveResult', input: 'serviceRemoveSource', inputLabel: 'Input' },
+  { title: 'Virtuelle Renovation', text: 'Renovationsideen werden sichtbar – mit neuen Materialien, Farben, Fliesen oder Ausstattung.', bg: 'serviceRenovationResult', input: 'serviceRenovationSource', inputLabel: 'Kundenmaterial' },
+  { title: 'Vorher & Nachher', text: 'Aus Plänen, Rohbauten und Bestandsfotos entstehen hochwertige Visualisierungen für Vermarktung und Präsentation.', bg: 'portfolioSlideBg', input: 'portfolioSlideInput', inputLabel: 'Beispiel' },
+  { title: 'Anfrage', text: 'Senden Sie Ihr Material und wir liefern eine hochwertige Visualisierung für Ihr nächstes Projekt.', bg: 'contactSlideBg', input: 'contactSlideInput', inputLabel: 'Startpunkt' }
 ];
-const cases = [
-  ['Innenraum','Grundriss zu Wohnraum','2D-Grundriss','realistischer Wohnraum','serviceInteriorPlanSource','serviceInteriorPlanResult'],
-  ['Innenraum','Rohbau zu fertigem Innenraum','Rohbau','möblierter Innenraum','serviceRawSource','serviceRawResult'],
-  ['Virtual Staging','Leerer Raum zu Verkaufsbild','leerer Raum','möbliertes Inseratsbild','serviceStagingSource','serviceStagingResult'],
-  ['Virtual Staging','Möbel entfernen','überfüllter Raum','neutraler leerer Raum','serviceRemoveSource','serviceRemoveResult'],
-  ['Renovation','Virtuelle Renovation Bad','altes Bad','modernes Bad','serviceRenovationSource','serviceRenovationResult'],
-  ['Außen','Außenrendering Neubau','Plan / Modell','realistisches Außenrendering','serviceExteriorSource','serviceExteriorResult']
-].map(([category,title,from,to,before,after], i)=>({id:i,category,title,from,to,before,after}));
-const filters=['Alle','Außen','Innenraum','Virtual Staging','Renovation'];
 
-async function init(){
-  const [texts,assets]=await Promise.all([fetch('text.json').then(r=>r.json()),fetch('assets.json').then(r=>r.json())]);
-  document.querySelectorAll('[data-text]').forEach(el=>{const k=el.dataset.text;if(texts[k])el.textContent=texts[k]});
-  renderServices(assets); renderFilters(); renderPortfolio('Alle', assets); renderContactForm(texts);
-  setupScrollSpy(); setupReveal();
-  bindScrollButtons();
+let activeIndex = 0;
+let deltaAccumulator = 0;
+let isTransitioning = false;
+let touchStartY = null;
+const threshold = 120;
+
+async function init() {
+  const [texts, assets] = await Promise.all([
+    fetch('text.json').then((r) => r.json()),
+    fetch('assets.json').then((r) => r.json())
+  ]);
+
+  document.querySelectorAll('[data-text]').forEach((element) => {
+    const key = element.dataset.text;
+    if (texts[key]) element.textContent = texts[key];
+  });
+
+  renderSlides(assets);
+  updateCounter();
+  bindInteractions();
 }
-function renderServices(a){
-  const host=document.getElementById('serviceScenes');
-  host.innerHTML=serviceData.map((s,index)=>`<article class="scene reveal ${s.align}" id="${s.id}" data-cat="${s.category}" style="--delay:${index*0.06}s"><img class="scene-bg" src="${a[s.img]}" alt="${s.title}"><div class="scene-shade"></div><div class="scene-content"><h2>${s.title}</h2><p>${s.text}</p><div class="pills"><span>💰 ${s.price}</span><span>⏱ ${s.time}</span><span>📥 ${s.source}</span><span>✨ ${s.result}</span></div><button class="btn scene-cta" data-scroll="contact" data-service="${s.title}">${s.cta}</button></div></article>`).join('');
+
+function renderSlides(assets) {
+  const viewport = document.getElementById('slideViewport');
+  viewport.innerHTML = slidesData.map((slide, index) => `
+    <article class="slide ${index === 0 ? 'is-active' : ''}" data-index="${index}">
+      <img class="bg" src="${assets[slide.bg]}" alt="${slide.title}" />
+      <div class="overlay"></div>
+      <h1 class="title">${slide.title}</h1>
+      <p class="desc">${slide.text}</p>
+      <figure class="input-wrap">
+        <img src="${assets[slide.input]}" alt="${slide.inputLabel}" />
+        <span>${slide.inputLabel}</span>
+      </figure>
+    </article>
+  `).join('');
 }
-function renderContactForm(t){
-  document.getElementById('contactForm').innerHTML=`<div class="grid"><label>${t.formName}<input required name="name" /></label><label>${t.formEmail}<input type="email" required name="email" /></label><label>${t.formPhone}<input name="phone" /></label><label>${t.formCompany}<input name="company" /></label><label>${t.formRole}<select name="role"><option>${t.roleArchitect}</option><option>${t.roleAdvisor}</option><option>${t.roleBroker}</option><option>${t.roleOwner}</option><option>${t.roleOther}</option></select></label><label>${t.formService}<select name="service">${serviceData.map(s=>`<option>${s.title}</option>`).join('')}</select></label><label>${t.formDelivery}<select name="delivery"><option>${t.deliveryExpress}</option><option>${t.deliveryStandard}</option></select></label><label>${t.formUpload}<input type="file" name="files" multiple /></label></div><label>${t.formMessage}<textarea name="message" rows="4"></textarea></label><button class="btn" type="submit">${t.formSubmit}</button><p class="form-message" id="formMessage" aria-live="polite"></p>`;
-  document.getElementById('contactForm').onsubmit=(e)=>{e.preventDefault();if(!e.target.reportValidity())return;e.target.reset();document.getElementById('formMessage').textContent=t.contactSuccess;};
+
+function bindInteractions() {
+  window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
 }
-function bindScrollButtons(){
-  document.querySelectorAll('[data-scroll]').forEach(b=>b.onclick=()=>{const to=document.getElementById(b.dataset.scroll);if(b.dataset.service){document.querySelector('select[name="service"]').value=b.dataset.service;}to.scrollIntoView({behavior:'smooth'});});
+
+function onWheel(event) {
+  event.preventDefault();
+  if (isTransitioning) return;
+  deltaAccumulator += event.deltaY;
+  if (Math.abs(deltaAccumulator) < threshold) return;
+  goTo(activeIndex + (deltaAccumulator > 0 ? 1 : -1));
+  deltaAccumulator = 0;
 }
-function renderFilters(){const f=document.getElementById('filters');f.innerHTML=filters.map((x,i)=>`<button class="filter-btn ${i===0?'active':''}">${x}</button>`).join(''); f.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{f.querySelectorAll('button').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); fetch('assets.json').then(r=>r.json()).then(a=>renderPortfolio(btn.textContent,a));});}
-function renderPortfolio(filter, a){const g=document.getElementById('portfolioGrid');const rows=cases.filter(c=>filter==='Alle'||c.category===filter); g.innerHTML=rows.map(c=>`<article class="p-card" data-id="${c.id}"><img src="${a[c.after]}" alt="${c.title}"><div><small>${c.category}</small><h3>${c.title}</h3><p>Ausgang: ${c.from}<br>Ergebnis: ${c.to}</p></div></article>`).join(''); g.querySelectorAll('.p-card').forEach(card=>card.onclick=()=>openModal(rows.find(x=>x.id==card.dataset.id),a));}
-function openModal(c,a){const m=document.getElementById('portfolioModal'); document.getElementById('modalTitle').textContent=c.title; document.getElementById('beforeImg').src=a[c.before]; document.getElementById('afterImg').src=a[c.after]; document.getElementById('modalMeta').textContent=`Ausgangslage: ${c.from} · Ergebnis: ${c.to}`; m.showModal();}
-document.getElementById('closeModal').onclick=()=>document.getElementById('portfolioModal').close();
-function setupScrollSpy(){const tabs=[...document.querySelectorAll('.tab')]; const map={exterior:['exterior'],interior:['interior-1','interior-2','interior-3'],staging:['staging-1','staging-2','staging-3']}; tabs.forEach(t=>t.onclick=()=>document.getElementById(map[t.dataset.target][0]).scrollIntoView({behavior:'smooth'})); const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(!e.isIntersecting)return; const active=tabs.find(t=>map[t.dataset.target].includes(e.target.id)); if(active){tabs.forEach(x=>x.classList.remove('is-active')); active.classList.add('is-active');}})},{threshold:.6}); Object.values(map).flat().forEach(id=>io.observe(document.getElementById(id)));}
-function setupReveal(){const io=new IntersectionObserver((entries)=>entries.forEach(e=>e.target.classList.toggle('in',e.isIntersecting)),{threshold:.25}); document.querySelectorAll('.reveal').forEach(el=>io.observe(el));}
+
+function onTouchMove(event) {
+  if (touchStartY === null || isTransitioning) return;
+  const delta = touchStartY - event.touches[0].clientY;
+  if (Math.abs(delta) < 45) return;
+  event.preventDefault();
+  goTo(activeIndex + (delta > 0 ? 1 : -1));
+  touchStartY = null;
+}
+
+function onKeyDown(event) {
+  if (isTransitioning) return;
+  if (event.key === 'ArrowDown') goTo(activeIndex + 1);
+  if (event.key === 'ArrowUp') goTo(activeIndex - 1);
+}
+
+function goTo(index) {
+  if (index < 0 || index >= slidesData.length || index === activeIndex) return;
+  const slides = [...document.querySelectorAll('.slide')];
+  isTransitioning = true;
+  slides[activeIndex].classList.remove('is-active');
+  slides[index].classList.add('is-active');
+  activeIndex = index;
+  updateCounter();
+  setTimeout(() => { isTransitioning = false; }, 900);
+}
+
+function updateCounter() {
+  const current = String(activeIndex + 1).padStart(2, '0');
+  const total = String(slidesData.length).padStart(2, '0');
+  document.getElementById('slideCounter').textContent = `${current} / ${total}`;
+}
+
 init();

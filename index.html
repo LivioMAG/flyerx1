@@ -7,48 +7,20 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <nav class="floating-nav" aria-label="Bereichsnavigation">
-      <div class="floating-tabs" role="tablist" aria-label="Leistungsbereiche">
-        <button class="tab is-active" data-target="exterior" data-text="navExterior"></button>
-        <button class="tab" data-target="interior" data-text="navInterior"></button>
-        <button class="tab" data-target="staging" data-text="navStaging"></button>
+    <main id="app" class="app">
+      <div class="topline"></div>
+      <nav class="ui" aria-label="Slide Navigation">
+        <span class="brand" data-text="brandName"></span>
+        <span class="counter" id="slideCounter">01 / 09</span>
+      </nav>
+
+      <section id="slideViewport" class="slide-viewport" aria-live="polite"></section>
+
+      <div class="legal-links">
+        <a href="#" data-text="footerImprint"></a>
+        <a href="#" data-text="footerPrivacy"></a>
       </div>
-      <div class="floating-actions">
-        <button class="mini-link" data-scroll="portfolio" data-text="navBeforeAfter"></button>
-        <button class="mini-link" data-scroll="contact" data-text="navInquiry"></button>
-      </div>
-    </nav>
-
-    <main>
-      <section id="serviceScenes" class="service-scenes"></section>
-
-      <section id="portfolio" class="portfolio container reveal">
-        <h2 data-text="portfolioTitle"></h2><p data-text="portfolioSubtitle"></p>
-        <div class="filters" id="filters"></div>
-        <div class="portfolio-grid" id="portfolioGrid"></div>
-      </section>
-
-      <section id="contact" class="contact container reveal">
-        <h2 data-text="contactTitle"></h2><p data-text="contactSubtitle"></p>
-        <form id="contactForm" novalidate></form>
-      </section>
     </main>
-
-    <footer class="footer">
-      <div class="container footer-row">
-        <div class="footer-links"><a href="#" data-text="footerImprint"></a><a href="#" data-text="footerPrivacy"></a></div>
-      </div>
-    </footer>
-
-    <dialog id="portfolioModal" class="modal">
-      <article class="modal-card">
-        <button class="close" id="closeModal" aria-label="Schließen">×</button>
-        <h3 id="modalTitle"></h3>
-        <div class="compare"><img id="beforeImg" alt="Ausgangslage" /><img id="afterImg" alt="Ergebnis" /></div>
-        <p id="modalMeta"></p>
-        <button class="btn" data-scroll="contact" data-text="modalCta"></button>
-      </article>
-    </dialog>
 
     <script src="js/main.js"></script>
   </body>
