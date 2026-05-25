@@ -21,9 +21,12 @@ const serviceIcons = {
 const slidesData = [
   {
     type: 'overview',
-    title: 'Visual Estate',
     claim: 'Hochwertige Immobilienvisualisierungen für Architektur, Vermarktung und Verkauf.',
-    promise: 'Alle Visualisierungen, die Sie bis 15:00 Uhr anfragen, erhalten Sie am nächsten Arbeitstag um 7:00 Uhr.',
+    promises: [
+      'Alle Visualisierungen, die Sie bis 15:00 Uhr anfragen, erhalten Sie am nächsten Arbeitstag um 7:00 Uhr.',
+      'Jetzt bezahlen, wenn Sie zufrieden sind.',
+      'Zwei Anpassungen inklusive.'
+    ],
     bg: 'overviewBg',
     services: [
       { name: 'Außenvisualisierung', category: 'Außenvisualisierungen', price: 'ab CHF XXX' },
@@ -66,7 +69,7 @@ function renderSlides(assets, texts) {
   const viewport = document.getElementById('slideViewport');
   viewport.innerHTML = slidesData.map((slide, index) => {
     if (slide.type === 'overview') {
-      return `<article class="slide slide-overview ${index === 0 ? 'is-active' : ''}" data-index="${index}"><img class="bg" src="${assets[slide.bg]}" alt="${slide.title}" /><div class="overlay"></div><div class="overview-content"><div class="overview-brand"><h1 class="overview-title">${slide.title}</h1><p class="overview-claim">${slide.claim}</p><p class="service-promise">${slide.promise}</p></div><div class="overview-list" role="list">${slide.services.map((item) => `<button class="service-item" data-target="${serviceRouteMap[item.name]}" role="listitem"><span class="service-item-icon">${serviceIcons[item.name] || ''}</span><span class="service-item-copy"><span class="service-item-title">${item.name}</span><span class="service-item-meta">${item.category}</span></span><strong>${item.price}</strong></button>`).join('')}</div></div></article>`;
+      return `<article class="slide slide-overview ${index === 0 ? 'is-active' : ''}" data-index="${index}"><img class="bg" src="${assets[slide.bg]}" alt="Visual Estate Übersicht" /><div class="overlay"></div><div class="overview-content"><div class="overview-intro"><p class="overview-claim reveal-item reveal-claim">${slide.claim}</p><div class="promise-list" role="list">${slide.promises.map((promise, promiseIndex) => `<p class="service-promise reveal-item reveal-promise" role="listitem" style="--reveal-order:${promiseIndex};"><span class="promise-dot" aria-hidden="true"></span>${promise}</p>`).join('')}</div></div><div class="overview-list" role="list">${slide.services.map((item, serviceIndex) => `<button class="service-item reveal-item reveal-service" data-target="${serviceRouteMap[item.name]}" role="listitem" style="--service-order:${serviceIndex};"><span class="service-item-icon">${serviceIcons[item.name] || ''}</span><span class="service-item-copy"><span class="service-item-title">${item.name}</span><span class="service-item-meta">${item.category}</span></span><strong>${item.price}</strong></button>`).join('')}</div></div></article>`;
     }
     if (slide.type === 'contact') {
       return `<article class="slide slide-contact" data-index="${index}"><img class="bg" src="${assets[slide.bg]}" alt="${slide.title}" /><div class="overlay"></div><section class="contact-content"><h1 class="service-title">${slide.title}</h1><p class="service-subtext">${slide.text}</p><form id="inquiryForm" class="inquiry-form" novalidate><label><span>${texts.formNameShort || 'Name oder Vorname'}</span><input name="name" type="text" autocomplete="name" required /></label><label><span>${texts.formEmailShort || 'E-Mail'}</span><input name="email" type="email" autocomplete="email" required /></label><label><span>${texts.formServiceShort || 'Interesse / Dienstleistung'}</span><select name="service" required><option value="">Bitte auswählen</option>${serviceOptions.map((option) => `<option value="${option}">${option}</option>`).join('')}</select></label><label><span>${texts.formMessageShort || 'Nachricht (optional)'}</span><textarea name="message" rows="3"></textarea></label><button type="submit">${texts.formSubmit || 'Anfrage senden'}</button><p class="form-feedback" id="formFeedback" role="status" aria-live="polite"></p></form></section></article>`;
