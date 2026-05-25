@@ -7,43 +7,19 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <header class="site-header" id="top">
-      <nav class="nav container" aria-label="Hauptnavigation">
-        <a href="#top" class="brand" data-text="brandName"></a>
-        <div class="tabbar" role="tablist" aria-label="Leistungsbereiche">
-          <button class="tab is-active" data-target="exterior" data-text="navExterior"></button>
-          <button class="tab" data-target="interior" data-text="navInterior"></button>
-          <button class="tab" data-target="staging" data-text="navStaging"></button>
-        </div>
-        <div class="nav-actions">
-          <button class="btn ghost" data-scroll="portfolio" data-text="navBeforeAfter"></button>
-          <button class="btn" data-scroll="contact" data-text="navInquiry"></button>
-        </div>
-      </nav>
-    </header>
+    <nav class="floating-nav" aria-label="Bereichsnavigation">
+      <div class="floating-tabs" role="tablist" aria-label="Leistungsbereiche">
+        <button class="tab is-active" data-target="exterior" data-text="navExterior"></button>
+        <button class="tab" data-target="interior" data-text="navInterior"></button>
+        <button class="tab" data-target="staging" data-text="navStaging"></button>
+      </div>
+      <div class="floating-actions">
+        <button class="mini-link" data-scroll="portfolio" data-text="navBeforeAfter"></button>
+        <button class="mini-link" data-scroll="contact" data-text="navInquiry"></button>
+      </div>
+    </nav>
 
     <main>
-      <section class="hero" id="hero">
-        <img class="hero-image" data-asset="heroMain" alt="Architekturvisualisierung eines modernen Hauses" />
-        <div class="hero-overlay"></div>
-        <div class="container hero-content reveal">
-          <p class="eyebrow">Premium Immobilienvisualisierung</p>
-          <h1 data-text="heroTitle"></h1>
-          <p class="lead" data-text="heroSubtitle"></p>
-          <div class="badges">
-            <span data-text="badge1"></span><span data-text="badge2"></span><span data-text="badge3"></span><span data-text="badge4"></span>
-          </div>
-          <div class="hero-cta">
-            <button class="btn" data-scroll="services" data-text="heroCtaPrimary"></button>
-            <button class="btn ghost" data-scroll="portfolio" data-text="heroCtaSecondary"></button>
-          </div>
-        </div>
-        <img class="hero-float reveal" data-asset="heroOverlay" alt="Vorher-Nachher-Innenraumvisualisierung" />
-      </section>
-
-      <section class="services container" id="services">
-        <h2 data-text="servicesTitle"></h2><p data-text="servicesSubtitle"></p>
-      </section>
       <section id="serviceScenes" class="service-scenes"></section>
 
       <section id="portfolio" class="portfolio container reveal">
@@ -54,27 +30,12 @@
 
       <section id="contact" class="contact container reveal">
         <h2 data-text="contactTitle"></h2><p data-text="contactSubtitle"></p>
-        <form id="contactForm" novalidate>
-          <div class="grid">
-            <label>Name* <input required name="name" /></label>
-            <label>E-Mail* <input type="email" required name="email" /></label>
-            <label>Telefon <input name="phone" /></label>
-            <label>Firma <input name="company" /></label>
-            <label>Ich bin<select name="role"><option>Architekt</option><option>Berater</option><option>Makler</option><option>Eigentümer</option><option>Sonstiges</option></select></label>
-            <label>Dienstleistung<select name="service"><option>Außenvisualisierung</option><option>Innenraumvisualisierung aus 2D-Plan</option><option>3D-Rendering veredeln</option><option>Rohbau zu Innenraum</option><option>Virtual Staging</option><option>Möbel entfernen</option><option>Virtuelle Renovation</option></select></label>
-            <label>Lieferung<select name="delivery"><option>Express: ab 4 Stunden</option><option>Standard: nächster Arbeitstag 7 Uhr</option></select></label>
-            <label>Dateiupload<input type="file" name="files" multiple /></label>
-          </div>
-          <label>Nachricht<textarea name="message" rows="4"></textarea></label>
-          <button class="btn" type="submit">Anfrage senden</button>
-          <p class="form-message" id="formMessage" aria-live="polite"></p>
-        </form>
+        <form id="contactForm" novalidate></form>
       </section>
     </main>
 
     <footer class="footer">
       <div class="container footer-row">
-        <span data-text="footerCopyright"></span>
         <div class="footer-links"><a href="#" data-text="footerImprint"></a><a href="#" data-text="footerPrivacy"></a></div>
       </div>
     </footer>
@@ -83,7 +44,7 @@
       <article class="modal-card">
         <button class="close" id="closeModal" aria-label="Schließen">×</button>
         <h3 id="modalTitle"></h3>
-        <div class="compare"><img id="beforeImg" alt="Ausgangslage"/><img id="afterImg" alt="Ergebnis"/></div>
+        <div class="compare"><img id="beforeImg" alt="Ausgangslage" /><img id="afterImg" alt="Ergebnis" /></div>
         <p id="modalMeta"></p>
         <button class="btn" data-scroll="contact" data-text="modalCta"></button>
       </article>
