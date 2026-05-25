@@ -25,7 +25,7 @@ body {
   top: .9rem;
   left: 50%;
   transform: translateX(-50%);
-  width: min(1100px, calc(100vw - 1.6rem));
+  width: min(1120px, calc(100vw - 1.6rem));
   min-height: 44px;
   padding: .5rem .85rem;
   border: 1px solid rgba(255,255,255,.22);
@@ -48,21 +48,16 @@ body {
   white-space: nowrap;
 }
 
-.top-nav {
-  display: flex;
-  justify-content: center;
-  gap: .34rem;
-  flex-wrap: wrap;
-}
+.top-nav { display: flex; justify-content: center; gap: .28rem; flex-wrap: wrap; }
 
 .nav-btn {
   border: 0;
   background: transparent;
   color: rgba(255,255,255,.72);
-  font-size: .66rem;
+  font-size: .62rem;
   letter-spacing: .1em;
   text-transform: uppercase;
-  padding: .4rem .64rem;
+  padding: .38rem .58rem;
   border-radius: 999px;
   border: 1px solid transparent;
   cursor: pointer;
@@ -98,7 +93,7 @@ body {
   position: absolute; inset: 0;
   background:
     linear-gradient(170deg, rgba(3,8,14,.72), rgba(8,12,20,.45) 42%, rgba(8,12,20,.86)),
-    radial-gradient(circle at 18% 82%, rgba(0,0,0,.38), transparent 40%);
+    linear-gradient(2deg, rgba(7, 10, 16, .68), rgba(7, 10, 16, .08) 42%);
 }
 
 .overview-content {
@@ -111,47 +106,105 @@ body {
 .overview-title { font-family: "Times New Roman", Georgia, serif; font-size: clamp(3rem, 10vw, 8rem); margin: 0; line-height: .92; }
 .overview-claim { margin: 0; font-size: clamp(1rem, 2vw, 1.24rem); max-width: 760px; color: #f1ede4; }
 .overview-desc, .include-note { margin: 0; max-width: 840px; color: var(--muted); line-height: 1.55; }
-.price-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(180px, 1fr));
-  gap: 1rem;
-  margin-top: .45rem;
-}
+.price-grid { display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 1rem; margin-top: .45rem; }
 .price-group { border-top: 1px solid var(--line); padding-top: .7rem; }
 .price-group h2 { margin: 0 0 .6rem; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.82); }
 .price-item { display: flex; justify-content: space-between; gap: .7rem; padding: .33rem 0; border-bottom: 1px solid rgba(255,255,255,.1); font-size: .9rem; }
 .price-item strong { font-weight: 500; color: #f4f0e8; white-space: nowrap; }
 .cta-link { align-self: flex-start; margin-top: .35rem; border: 1px solid rgba(255,255,255,.34); background: rgba(255,255,255,.08); color: #fff; padding: .56rem .9rem; border-radius: 999px; letter-spacing: .08em; text-transform: uppercase; font-size: .68rem; cursor: pointer; }
 
-.title {
+.service-copy,
+.contact-content {
   position: absolute;
   left: clamp(1rem, 3vw, 3rem);
-  bottom: clamp(1.5rem, 4vh, 3.2rem);
-  max-width: 72vw;
-  margin: 0;
-  font-family: "Times New Roman", Georgia, serif;
-  font-weight: 500;
-  font-size: clamp(3rem, 11vw, 12rem);
-  line-height: 0.9;
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  width: min(62vw, 640px);
 }
-.desc {
-  position: absolute;
-  right: clamp(1rem, 3vw, 3rem);
-  top: 38%;
-  width: min(360px, 44vw);
+
+.service-title {
   margin: 0;
-  font-size: clamp(0.92rem, 1.15vw, 1.02rem);
-  line-height: 1.6;
-  color: var(--muted);
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 350;
+  font-size: clamp(1.7rem, 2.2vw, 1.78rem);
+  letter-spacing: 0.015em;
+  line-height: 1.2;
+  max-width: 22ch;
 }
+
+.service-subtext {
+  margin: .55rem 0 0;
+  font-size: clamp(0.86rem, 1vw, 0.96rem);
+  font-weight: 300;
+  color: rgba(245, 240, 231, 0.9);
+  line-height: 1.5;
+  max-width: 56ch;
+}
+
 .input-wrap {
   position: absolute;
   right: clamp(1rem, 4vw, 4rem);
-  bottom: clamp(4rem, 9vh, 8rem);
-  width: clamp(120px, 18vw, 280px);
+  bottom: clamp(3.2rem, 8vh, 7rem);
+  width: clamp(120px, 16vw, 240px);
 }
-.input-wrap img { width: 100%; display: block; border: 1px solid rgba(255,255,255,.55); }
-.input-wrap span { display: inline-block; margin-top: .45rem; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.76); }
+.input-wrap img {
+  width: 100%;
+  display: block;
+  border: 1px solid rgba(255,255,255,.58);
+  box-shadow: 0 16px 28px rgba(0,0,0,.25);
+}
+.input-wrap span { display: inline-block; margin-top: .45rem; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.76); }
+
+.inquiry-form {
+  margin-top: 1.1rem;
+  display: grid;
+  gap: .72rem;
+  width: min(520px, 92vw);
+}
+
+.inquiry-form label { display: grid; gap: .34rem; }
+.inquiry-form label span {
+  font-size: .66rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.82);
+}
+
+.inquiry-form input,
+.inquiry-form select,
+.inquiry-form textarea {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(6, 10, 18, .28);
+  color: #f7f3ec;
+  padding: .72rem .78rem;
+  font: inherit;
+  outline: none;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.inquiry-form textarea { resize: vertical; min-height: 86px; }
+.inquiry-form input:focus,
+.inquiry-form select:focus,
+.inquiry-form textarea:focus {
+  border-color: rgba(255,255,255,.74);
+}
+
+.inquiry-form button {
+  justify-self: start;
+  border: 1px solid rgba(255,255,255,.5);
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  padding: .62rem 1rem;
+  border-radius: 999px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: .68rem;
+  cursor: pointer;
+}
+
+.form-feedback { margin: .2rem 0 0; font-size: .84rem; color: #ffd4c3; min-height: 1.2em; }
+.form-feedback.is-success { color: #d8ffe8; }
 
 .legal-links { position: fixed; right: 1.2rem; bottom: 1rem; z-index: 30; display: flex; gap: .9rem; }
 .legal-links a { color: rgba(255,255,255,.78); text-decoration: none; font-size: .75rem; letter-spacing: .08em; }
@@ -161,7 +214,11 @@ body {
   .counter { display: none; }
   .price-grid { grid-template-columns: 1fr; max-width: 700px; }
   .overview-content { inset: 7.2rem 1rem 1.2rem; overflow: auto; padding-bottom: .8rem; }
-  .title { font-size: clamp(2.4rem, 15vw, 5.4rem); max-width: 90vw; }
-  .desc { top: auto; bottom: 28%; width: min(86vw, 420px); right: 1rem; }
-  .input-wrap { width: clamp(110px, 34vw, 190px); right: 1rem; bottom: 7rem; }
+  .service-copy,
+  .contact-content { width: calc(100vw - 2rem); left: 1rem; bottom: 1.2rem; }
+  .service-title { font-size: clamp(1.35rem, 7.4vw, 1.68rem); max-width: 95%; }
+  .service-subtext { font-size: .86rem; max-width: 95%; }
+  .input-wrap { width: clamp(100px, 31vw, 160px); right: 1rem; bottom: 10.6rem; }
+  .inquiry-form { width: min(92vw, 460px); }
+  .legal-links { right: .7rem; bottom: .7rem; }
 }
