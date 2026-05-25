@@ -22,7 +22,7 @@
   "footerCopyright": "© Visual Estate",
   "footerImprint": "Impressum",
   "footerPrivacy": "Datenschutz",
-  "contactSuccess": "Vielen Dank! Ihre Anfrage wurde vorbereitet. Wir melden uns zeitnah.",
+  "contactSuccess": "Danke, wir melden uns zeitnah mit den nächsten Schritten.",
   "modalCta": "Ähnliches Projekt anfragen",
   "formName": "Name*",
   "formEmail": "E-Mail*",
@@ -40,5 +40,10 @@
   "deliveryStandard": "Standard: nächster Arbeitstag 7 Uhr",
   "formUpload": "Dateiupload",
   "formMessage": "Nachricht",
-  "formSubmit": "Anfrage senden"
+  "formSubmit": "Anfrage senden",
+  "formNameShort": "Name oder Vorname",
+  "formEmailShort": "E-Mail",
+  "formServiceShort": "Interesse / Dienstleistung",
+  "formMessageShort": "Nachricht (optional)",
+  "formError": "Bitte Name, gültige E-Mail und Dienstleistung ausfüllen."
 }

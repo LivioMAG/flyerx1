@@ -38,14 +38,25 @@ const slidesData = [
   { title: 'Virtual Staging', text: 'Leere Räume werden digital möbliert und verkaufsstark inszeniert.', bg: 'serviceStagingResult', input: 'serviceStagingSource', inputLabel: 'Input' },
   { title: 'Möbel entfernen', text: 'Überladene Räume werden neutralisiert und als klare, leere Flächen dargestellt.', bg: 'serviceRemoveResult', input: 'serviceRemoveSource', inputLabel: 'Input' },
   { title: 'Virtuelle Renovation', text: 'Renovationsideen werden sichtbar – mit neuen Materialien, Farben, Fliesen oder Ausstattung.', bg: 'serviceRenovationResult', input: 'serviceRenovationSource', inputLabel: 'Kundenmaterial' },
-  { title: 'Anfrage', text: 'Senden Sie Ihr Material und wir liefern eine hochwertige Visualisierung für Ihr nächstes Projekt.', bg: 'contactSlideBg', input: 'contactSlideInput', inputLabel: 'Startpunkt' }
+  { type: 'contact', title: 'Anfrage', text: 'Erzählen Sie uns kurz, was Sie visualisieren möchten.', bg: 'contactSlideBg' }
 ];
 
 const navItems = [
   { label: 'Visual Estate', index: 0 },
   { label: 'Außenvisualisierungen', index: 1 },
   { label: 'Innenvisualisierungen', index: 2 },
-  { label: 'Virtual Stacking', index: 5 }
+  { label: 'Virtual Stacking', index: 5 },
+  { label: 'Anfrage', index: 8 }
+];
+
+const serviceOptions = [
+  'Außenvisualisierung',
+  '2D-Plan zu Raum',
+  'Rendering veredeln',
+  'Rohbau zu Innenraum',
+  'Virtual Staging',
+  'Möbel entfernen',
+  'Virtuelle Renovation'
 ];
 
 let activeIndex = 0;
@@ -66,10 +77,11 @@ async function init() {
   });
 
   renderNav();
-  renderSlides(assets);
+  renderSlides(assets, texts);
   updateCounter();
   updateActiveNav();
   bindInteractions();
+  bindInquiryForm(texts);
 }
 
 function renderNav() {
@@ -83,7 +95,7 @@ function renderNav() {
   });
 }
 
-function renderSlides(assets) {
+function renderSlides(assets, texts) {
   const viewport = document.getElementById('slideViewport');
   viewport.innerHTML = slidesData.map((slide, index) => {
     if (slide.type === 'overview') {
@@ -110,12 +122,50 @@ function renderSlides(assets) {
       `;
     }
 
+    if (slide.type === 'contact') {
+      return `
+        <article class="slide slide-contact" data-index="${index}">
+          <img class="bg" src="${assets[slide.bg]}" alt="${slide.title}" />
+          <div class="overlay"></div>
+          <section class="contact-content">
+            <h1 class="service-title">${slide.title}</h1>
+            <p class="service-subtext">${slide.text}</p>
+            <form id="inquiryForm" class="inquiry-form" novalidate>
+              <label>
+                <span>${texts.formNameShort || 'Name oder Vorname'}</span>
+                <input name="name" type="text" autocomplete="name" required />
+              </label>
+              <label>
+                <span>${texts.formEmailShort || 'E-Mail'}</span>
+                <input name="email" type="email" autocomplete="email" required />
+              </label>
+              <label>
+                <span>${texts.formServiceShort || 'Interesse / Dienstleistung'}</span>
+                <select name="service" required>
+                  <option value="">Bitte auswählen</option>
+                  ${serviceOptions.map((option) => `<option value="${option}">${option}</option>`).join('')}
+                </select>
+              </label>
+              <label>
+                <span>${texts.formMessageShort || 'Nachricht (optional)'}</span>
+                <textarea name="message" rows="3"></textarea>
+              </label>
+              <button type="submit">${texts.formSubmit || 'Anfrage senden'}</button>
+              <p class="form-feedback" id="formFeedback" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+        </article>
+      `;
+    }
+
     return `
-      <article class="slide ${index === 0 ? 'is-active' : ''}" data-index="${index}">
+      <article class="slide" data-index="${index}">
         <img class="bg" src="${assets[slide.bg]}" alt="${slide.title}" />
         <div class="overlay"></div>
-        <h1 class="title">${slide.title}</h1>
-        <p class="desc">${slide.text}</p>
+        <div class="service-copy">
+          <h1 class="service-title">${slide.title}</h1>
+          <p class="service-subtext">${slide.text}</p>
+        </div>
         <figure class="input-wrap">
           <img src="${assets[slide.input]}" alt="${slide.inputLabel}" />
           <span>${slide.inputLabel}</span>
@@ -126,6 +176,30 @@ function renderSlides(assets) {
 
   const cta = viewport.querySelector('.cta-link');
   if (cta) cta.addEventListener('click', () => goTo(slidesData.findIndex((slide) => slide.title === 'Anfrage')));
+}
+
+function bindInquiryForm(texts) {
+  const form = document.getElementById('inquiryForm');
+  const feedback = document.getElementById('formFeedback');
+  if (!form || !feedback) return;
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = form.elements.name.value.trim();
+    const email = form.elements.email.value.trim();
+    const service = form.elements.service.value.trim();
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!name || !validEmail || !service) {
+      feedback.textContent = texts.formError || 'Bitte Name, gültige E-Mail und Dienstleistung ausfüllen.';
+      feedback.classList.remove('is-success');
+      return;
+    }
+
+    feedback.textContent = texts.contactSuccess || 'Danke, wir melden uns zeitnah mit den nächsten Schritten.';
+    feedback.classList.add('is-success');
+    form.reset();
+  });
 }
 
 function bindInteractions() {
@@ -174,7 +248,8 @@ function goTo(index) {
 function updateActiveNav() {
   const nav = document.querySelectorAll('.nav-btn');
   let groupIndex = 0;
-  if (activeIndex >= 5 && activeIndex <= 7) groupIndex = 3;
+  if (activeIndex === 8) groupIndex = 4;
+  else if (activeIndex >= 5 && activeIndex <= 7) groupIndex = 3;
   else if (activeIndex >= 2 && activeIndex <= 4) groupIndex = 2;
   else if (activeIndex === 1) groupIndex = 1;
 
