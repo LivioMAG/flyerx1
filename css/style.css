@@ -29,7 +29,8 @@ body { font-family: "Inter", system-ui, sans-serif; color: var(--text); }
 .overview-title { margin: 0; font-size: clamp(1.5rem, 4vw, 2.95rem); line-height: 1.08; max-width: 14ch; color: #f0ddc1; font-weight: 420; letter-spacing: .012em; }
 .overview-claim { margin: .6rem 0 0; font-size: clamp(.85rem, 1.45vw, 1.35rem); line-height: 1.42; max-width: 33ch; color: rgba(247, 241, 232, .93); font-weight: 350; letter-spacing: .008em; }
 .promise-list { margin-top: 1.35rem; border-top: 1px solid var(--line-soft); padding-top: .35rem; }
-.service-promise { margin: .55rem 0 0; max-width: 590px; color: #f3dcc0; line-height: 1.5; display: flex; align-items: flex-start; gap: .58rem; font-size: .95rem; }
+.service-promise { margin: .55rem 0 0; max-width: 590px; color: #f3dcc0; line-height: 1.5; display: flex; align-items: flex-start; gap: .58rem; font-size: .95rem; position: relative; padding-left: .28rem; }
+.service-promise::before { content:""; position:absolute; left:0; top:.52rem; width:2px; height:0; background: linear-gradient(180deg, rgba(227,195,152,.95), rgba(184,145,94,.2)); border-radius:999px; }
 .promise-dot { width: 8px; height: 8px; margin-top: .42rem; border-radius: 50%; background: linear-gradient(135deg, #ceb082, var(--accent)); box-shadow: 0 0 0 5px rgba(184, 145, 94, .13); flex-shrink: 0; }
 .overview-panel { align-self: stretch; display: grid; grid-template-rows: auto 1fr; gap: .9rem; min-height: 0; }
 .overview-toggle { display: inline-flex; width: fit-content; border: 1px solid var(--line-soft); border-radius: 999px; padding: .2rem; background: rgba(16, 14, 13, .42); }
@@ -44,6 +45,8 @@ body { font-family: "Inter", system-ui, sans-serif; color: var(--text); }
 .flow-index { width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(205, 165, 112, .75); color: #ecd6b5; font-size: .72rem; display: inline-flex; align-items: center; justify-content: center; margin-top: .12rem; }
 .flow-step h3 { margin: 0; font-size: .97rem; font-weight: 450; color: #f3ead9; }
 .flow-step p { margin: .35rem 0 0; color: rgba(243, 236, 224, .74); line-height: 1.45; font-size: .88rem; max-width: 46ch; }
+.flow-substep { margin-top: .5rem; padding-left: .65rem; border-left: 1px solid rgba(205,165,112,.45); font-size: .82rem; color: rgba(243,236,224,.7); }
+.flow-substep strong { color: #ecd6b5; font-weight: 500; }
 .overview-list { border-top: 1px solid var(--line); }
 .service-item { width: 100%; border: 0; border-bottom: 1px solid var(--line-soft); background: transparent; color: inherit; padding: .84rem 0; display: grid; grid-template-columns: 30px 1fr auto; gap: .78rem; align-items: center; text-align: left; cursor: pointer; transition: transform 180ms ease, background-color 180ms ease; }
 .service-item:hover, .service-item:focus-visible { background: rgba(184, 145, 94, .08); transform: translateX(4px); outline: none; }
@@ -71,7 +74,7 @@ body { font-family: "Inter", system-ui, sans-serif; color: var(--text); }
 .slide-overview.is-active .reveal-item { animation: luxuryReveal 700ms cubic-bezier(.19,.88,.35,1) forwards; }
 .slide-overview.is-active .reveal-title { animation-delay: 150ms; }
 .slide-overview.is-active .reveal-claim { animation-delay: 350ms; }
-.slide-overview.is-active .reveal-promise { animation-delay: calc(560ms + (var(--reveal-order) * 170ms)); }
+.slide-overview.is-active .reveal-promise { animation: luxuryReveal 720ms cubic-bezier(.19,.88,.35,1) forwards, promiseLine 620ms ease forwards; animation-delay: calc(560ms + (var(--reveal-order) * 190ms)); }
 .slide-overview.is-active .reveal-panel { animation-delay: 980ms; }
 .slide-overview.is-active .overview-flow.is-active .reveal-step { animation-delay: calc(1120ms + (var(--step-order) * 140ms)); }
 .slide-overview.is-active .overview-list.is-active .reveal-service { animation-delay: calc(1090ms + (var(--service-order) * 100ms)); }
@@ -79,6 +82,12 @@ body { font-family: "Inter", system-ui, sans-serif; color: var(--text); }
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes promiseLine {
+  from { }
+  to { }
+}
+.slide-overview.is-active .reveal-promise::before { animation: promiseLineGrow 650ms ease forwards; animation-delay: calc(650ms + (var(--reveal-order) * 190ms)); }
+@keyframes promiseLineGrow { from { height: 0; opacity: .25; } to { height: 1.1rem; opacity: 1; } }
 @media (max-width: 980px) {
   .app-bar { grid-template-columns: 1fr; justify-items: center; border-radius: 20px; padding: .48rem .6rem; gap: .4rem; }
   .counter { display: none; }
