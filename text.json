@@ -18,7 +18,7 @@
   "portfolioTitle": "Sehen Sie, was aus Plänen, Fotos und Rohbauten entstehen kann.",
   "portfolioSubtitle": "Unsere Beispiele zeigen den direkten Vergleich zwischen Ausgangslage und fertiger Visualisierung.",
   "contactTitle": "Visualisierung anfragen",
-  "contactSubtitle": "Senden Sie uns Ihre Unterlagen. Wir prüfen das Projekt und melden uns mit Preis und Lieferzeit.",
+  "contactSubtitle": "Dieses Formular dient dem Erstkontakt. Bildmaterial wird erst nach dem Erstgespräch angefragt.",
   "footerCopyright": "© Visual Estate",
   "footerImprint": "Impressum",
   "footerPrivacy": "Datenschutz",
@@ -48,5 +48,6 @@
   "formError": "Bitte Name, gültige E-Mail, Dienstleistung und Projektbeschreibung ausfüllen.",
   "formUploadShort": "Dateiupload (optional)",
   "formUploadHint": "Keine Datei ausgewählt.",
-  "formProjectDescription": "Projektbeschreibung*"
+  "formProjectDescription": "Kurzbeschreibung Ihres Anliegens*",
+  "formContactOnly": "Hinweis: Über diese Webseite können keine Bilder eingereicht werden. Das Formular dient nur dem Erstkontakt."
 }
