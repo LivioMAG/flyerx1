@@ -41,11 +41,11 @@
   "formUpload": "Dateiupload",
   "formMessage": "Nachricht",
   "formSubmit": "Anfrage senden",
-  "formNameShort": "Name oder Vorname",
+  "formNameShort": "Name",
   "formEmailShort": "E-Mail",
   "formServiceShort": "Interesse / Dienstleistung",
   "formMessageShort": "Nachricht (optional)",
-  "formError": "Bitte Name, gültige E-Mail, Dienstleistung und Projektbeschreibung ausfüllen.",
+  "formError": "Bitte Name, gültige E-Mail und Dienstleistung ausfüllen.",
   "formUploadShort": "Dateiupload (optional)",
   "formUploadHint": "Keine Datei ausgewählt.",
   "formProjectDescription": "Kurzbeschreibung Ihres Anliegens*",
@@ -93,7 +93,7 @@
   "overviewPromise3": "Zwei Anpassungen inklusive.",
   "serviceInputLabel": "Ausgangsbild",
   "contactSlideTitle": "Anfrage",
-  "contactSlideText": "Nutzen Sie das Formular für den Erstkontakt – wir melden uns für ein kurzes Gespräch.",
+  "contactSlideText": "Nutzen Sie das Formular für den Erstkontakt.",
   "service1Text": "Realistische Außenrenderings für Architektur, Vermarktung und Projektpräsentation.",
   "service2Text": "Aus Grundrissen entstehen realistische Innenräume mit Licht, Materialien und Atmosphäre.",
   "service3Text": "Bestehende 3D-Renderings werden zu fotorealistischen Bildern für Präsentation und Vermarktung.",
@@ -194,5 +194,8 @@
   "service7Input3Title": "Referenzbild für Renovationsstil",
   "service7Input3Description": "Optional: Referenz für Stilrichtung, Materialien oder Farbwelt.",
   "service7Input3Type": "image",
-  "service7Input3Required": "false"
+  "service7Input3Required": "false",
+  "formPhoneShort": "Telefon (optional)",
+  "formWebhookError": "Die Anfrage konnte nicht gesendet werden. Bitte erneut versuchen.",
+  "inquiryWebhookUrl": "https://example.com/webhook"
 }
