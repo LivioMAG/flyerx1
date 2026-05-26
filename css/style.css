@@ -81,7 +81,7 @@ body { font-family: "Inter", system-ui, sans-serif; color: var(--text); }
 .form-feedback { margin: .2rem 0 0; font-size: .84rem; color: #ffd4c3; min-height: 1.2em; }
 .form-feedback.is-success { color: #e7e0cd; }
 .legal-links { display: flex; gap: .9rem; }
-.legal-links a { color: rgba(241, 225, 202, .78); text-decoration: none; font-size: .75rem; letter-spacing: .08em; }
+.legal-links a { color: #ffffff; text-decoration: none; font-size: .75rem; letter-spacing: .08em; }
 .legal-links--contact { position: absolute; right: 1rem; bottom: 1rem; justify-content: flex-end; z-index: 5; }
 .slide-overview .reveal-item { opacity: 0; transform: translateY(18px); }
 .slide-overview.is-active .reveal-item { animation: luxuryReveal 700ms cubic-bezier(.19,.88,.35,1) forwards; }
