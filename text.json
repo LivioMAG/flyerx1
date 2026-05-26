@@ -44,7 +44,7 @@
   "navExteriorGroup": "Aussenvisualisierungen",
   "navInteriorGroup": "Innenvisualisierungen",
   "navStagingGroup": "Immobilienoptimierung",
-  "overviewTitle": "Immobilien\nerlebbar machen.",
+  "overviewTitle": "Immobilien \\ erlebbar machen.",
   "overviewClaim": "Realistische Visualisierungen für Immobilien,\nArchitektur und professionelle Vermarktung",
   "overviewImageAlt": "Visual Estate Übersicht",
   "overviewPromise1": "Unterlagen bis 16 Uhr senden – am nächsten Morgen geliefert.",
@@ -157,5 +157,7 @@
   "formPhoneShort": "Telefon (optional)",
   "formWebhookError": "Die Anfrage konnte nicht gesendet werden. Bitte erneut versuchen.",
   "inquiryWebhookUrl": "https://example.com/webhook",
-  "navOverview": "Visual Estate"
+  "navOverview": "Visual Estate",
+  "imprintUrl": "https://example.com/impressum",
+  "privacyUrl": "https://example.com/datenschutz"
 }
