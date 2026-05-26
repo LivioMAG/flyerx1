@@ -156,7 +156,7 @@
   "service7Input3Required": "false",
   "formPhoneShort": "Telefon (optional)",
   "formWebhookError": "Die Anfrage konnte nicht gesendet werden. Bitte erneut versuchen.",
-  "inquiryWebhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook-test/570a1b66-3a75-479e-ae61-58725b4783e1",
+  "inquiryWebhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/570a1b66-3a75-479e-ae61-58725b4783e1",
   "navOverview": "Visualize Estate",
   "imprintUrl": "https://voltlog.ch/impressum.html",
   "privacyUrl": "https://voltlog.ch/datenschutz.html"
