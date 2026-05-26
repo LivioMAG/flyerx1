@@ -33,7 +33,7 @@ body { font-family: "Inter", system-ui, sans-serif; color: var(--text); }
 .slide.is-active .bg { transform: scale(1.01); }
 .overlay { position: absolute; inset: 0; background: linear-gradient(165deg, rgba(13, 12, 11, .78), rgba(13, 12, 11, .36) 42%, rgba(13, 12, 11, .86)), linear-gradient(10deg, rgba(18, 16, 15, .7), rgba(18, 16, 15, .1) 45%); }
 .overview-content { position: absolute; inset: clamp(6rem, 16vh, 8rem) clamp(1rem, 6vw, 5.4rem) clamp(1.2rem, 5vh, 2.2rem); display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(1.2rem, 3vw, 3.5rem); align-items: start; }
-.overview-intro { max-width: 670px; align-self: end; }
+.overview-intro { max-width: 670px; align-self: end; justify-self: center; }
 .overview-title { margin: 0; font-size: clamp(1.5rem, 4vw, 2.95rem); line-height: 1.08; max-width: 14ch; color: #f0ddc1; font-weight: 420; letter-spacing: .012em; }
 .overview-claim { margin: .6rem 0 0; font-size: clamp(.85rem, 1.45vw, 1.35rem); line-height: 1.42; max-width: 33ch; color: rgba(247, 241, 232, .93); font-weight: 350; letter-spacing: .008em; }
 .promise-list { margin-top: 1.35rem; border-top: 1px solid var(--line-soft); padding-top: .35rem; }
