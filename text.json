@@ -156,5 +156,6 @@
   "service7Input3Required": "false",
   "formPhoneShort": "Telefon (optional)",
   "formWebhookError": "Die Anfrage konnte nicht gesendet werden. Bitte erneut versuchen.",
-  "inquiryWebhookUrl": "https://example.com/webhook"
+  "inquiryWebhookUrl": "https://example.com/webhook",
+  "navOverview": "Visual Estate"
 }
